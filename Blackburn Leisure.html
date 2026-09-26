@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+@font-face {
+  font-family: "Optimistic";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Optimistic Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
+}
+:where(html) {
+  font-family: "Optimistic", system-ui, sans-serif;
+}
+:where(code, pre, kbd, samp) {
+  font-family: "Optimistic Mono", ui-monospace, monospace;
+}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Blackburn Leisure</title>
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Blackburn Leisure">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100dvh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.neon-purple{color:#B026FF;text-shadow:0 0 10px #B026FF,0 0 20px #B026FF;font-weight:900;letter-spacing:1px}
+.header{padding:18px 0 8px;text-align:center}
+.logo-img{width:110px;height:110px;border-radius:24px;box-shadow:0 0 18px rgba(212,175,55,0.4);border:1px solid #222}
+.subtitle{margin-top:14px;font-size:15px}
+.section-title{padding:0 16px;margin-top:22px;font-size:16px;font-weight:800;color:#fff;letter-spacing:0.3px}
+.carousel-wrap{margin-top:12px;overflow:hidden;position:relative;width:100%}
+.carousel{display:flex;gap:4vw;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scroll-padding:0 8vw;padding:0 8vw 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.carousel::-webkit-scrollbar{display:none}
+.poster-card{min-width:84vw;width:84vw;height:460px;scroll-snap-align:center;scroll-snap-stop:always;border-radius:18px;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.6);overflow:hidden;position:relative;background:#111;flex-shrink:0;cursor:pointer;box-sizing:border-box}
+@media(min-width:500px){.poster-card{min-width:380px;width:380px;height:500px}}
+.poster-card img{width:100%;height:100%;object-fit:cover}
+.poster-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.95));padding:36px 12px 10px}
+.poster-title{font-size:13px;font-weight:800}
+.details-btn{position:absolute;top:10px;right:10px;background:#B026FF;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;box-shadow:0 0 10px #B026FF}
+.grid{padding:18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.box{height:168px;background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform 0.15s;border:2px solid #2a0a3a;box-shadow:0 0 18px rgba(176,38,255,0.25), inset 0 0 12px rgba(176,38,255,0.08)}
+.box:active{transform:scale(0.97)}
+.box.active{border-color:#B026FF;box-shadow:0 0 22px rgba(176,38,255,0.8), 0 0 40px rgba(176,38,255,0.25), inset 0 0 14px rgba(176,38,255,0.12)}
+.box.inactive{opacity:0.85;border-color:#3a1a5a}
+.icon-wrap{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;filter:drop-shadow(0 0 8px #B026FF) drop-shadow(0 0 18px rgba(176,38,255,0.6))}
+.icon-wrap svg{width:44px;height:44px;stroke:#B026FF;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.box.inactive .icon-wrap{filter:drop-shadow(0 0 6px rgba(176,38,255,0.4))}
+.box.inactive .icon-wrap svg{stroke:#7a3aaa;opacity:0.7}
+.box-label{font-size:13px;font-weight:800;letter-spacing:0.3px;text-align:center;color:#fff;line-height:1.2;padding:0 6px}
+.soon-badge{position:absolute;top:10px;right:10px;background:#B026FF;color:#fff;font-size:9px;padding:4px 9px;border-radius:12px;font-weight:900;letter-spacing:0.6px;box-shadow:0 0 10px #B026FF}
+.install-banner{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #B026FF;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;z-index:100;transform:translateY(100%);transition:transform 0.3s}
+.install-banner.show{transform:translateY(0)}
+.install-banner button{background:#B026FF;color:#fff;border:none;padding:8px 16px;border-radius:20px;font-weight:800;font-size:13px}
+.detail-overlay{position:fixed;inset:0;background:#000;z-index:200;overflow-y:auto;display:none;padding-bottom:40px}
+.detail-overlay.open{display:block}
+.home-btn{position:sticky;top:0;z-index:5;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #222}
+.home-btn button{background:#222;color:#fff;border:1px solid #444;padding:8px 16px;border-radius:20px;font-weight:700}
+.detail-poster{width:100%;max-width:420px;margin:16px auto;display:block;border-radius:16px;border:2px solid #B026FF;box-shadow:0 0 20px rgba(176,38,255,0.5)}
+.detail-meta{padding:16px;text-align:center}
+.detail-meta h2{font-size:20px;margin-bottom:8px}
+.detail-meta p{color:#aaa;font-size:14px;line-height:1.5}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dot{width:6px;height:6px;border-radius:50%;background:#333}
+.dot.active{background:#B026FF;box-shadow:0 0 6px #B026FF}
+.list-overlay{position:fixed;inset:0;background:#000;z-index:150;overflow-y:auto;display:none}
+.list-overlay.open{display:block}
+.list-item{display:flex;gap:12px;padding:14px;border-bottom:1px solid #111;align-items:center}
+.list-item img{width:60px;height:84px;border-radius:10px;object-fit:cover;border:1.5px solid #B026FF;box-shadow:0 0 10px rgba(176,38,255,0.4)}
+.venue-page{padding:16px}
+.venue-hero{border-radius:16px;overflow:hidden;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);margin-bottom:16px}
+.venue-hero img{width:100%;height:200px;object-fit:cover;display:block}
+.venue-bullets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.bullet{background:#111;border:1px solid #222;border-radius:12px;padding:10px;text-align:center;font-size:12px;font-weight:700}
+.bullet span{display:block;font-size:18px;margin-bottom:4px}
+.form-card{background:#0f0f0f;border:1px solid #222;border-radius:16px;padding:14px;margin-top:16px}
+.form-card input,.form-card select,.form-card textarea{width:100%;background:#000;border:1px solid #333;color:#fff;border-radius:10px;padding:12px;margin:6px 0 12px;font-size:14px}
+.form-card label{font-size:11px;color:#aaa;font-weight:800;letter-spacing:0.5px}
+.form-card button{width:100%;background:#B026FF;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:14px;box-shadow:0 0 16px rgba(176,38,255,0.6);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="header">
+<img src="logo-400.png" class="logo-img" alt="Blackburn Leisure">
+<div class="subtitle neon-purple">BLACKBURN LEISURE COMMUNITY CLUB • FUNCTION ROOM</div>
+<div style="margin-top:6px;font-size:12px;color:#666">Prescott Ave, Brough HU15 1BR</div>
+</div>
+<div class="section-title">Our Next Events</div>
+<div class="carousel-wrap">
+<div class="carousel" id="carousel"></div>
+<div class="dots" id="dots"></div>
+</div>
+<div class="grid" id="grid"></div>
+<div style="text-align:center;padding:8px 0 6px"><span style="color:#333;font-size:11px">Tap Share → Add to Home Screen for app</span></div>
+<div class="install-banner" id="installBanner">
+<span style="font-size:13px">📲 Install as app?</span>
+<div><button id="installBtn">Install</button><button onclick="this.parentElement.parentElement.classList.remove('show')" style="background:#222;margin-left:8px">X</button></div>
+</div>
+<div class="detail-overlay" id="detailOverlay">
+<div class="home-btn"><button onclick="closeDetail()">← HOME</button><span style="margin-left:10px;font-weight:800">Event Details</span></div>
+<img class="detail-poster" id="detailPoster" src="">
+<div class="detail-meta">
+<h2 id="detailTitle"></h2>
+<p id="detailDate"></p>
+<p id="detailTime" style="margin-top:6px"></p>
+<p id="detailDesc" style="margin-top:12px;color:#fff"></p>
+<div style="margin-top:18px;display:flex;gap:10px;justify-content:center"><button onclick="closeDetail()" style="background:#222;color:#fff;border:1px solid #444;padding:10px 18px;border-radius:20px;font-weight:700">Back</button><button onclick="shareEvent()" style="background:#B026FF;color:#fff;border:none;padding:10px 18px;border-radius:20px;font-weight:800">Share Event</button></div>
+</div>
+</div>
+<div class="list-overlay" id="listOverlay">
+<div class="home-btn"><button onclick="closeList()">← HOME</button><span style="margin-left:10px;font-weight:800">All Upcoming Events</span></div>
+<div id="listContent"></div>
+</div>
+<div class="list-overlay" id="venueOverlay">
+<div class="home-btn"><button onclick="closeVenue()">← HOME</button><span style="margin-left:10px;font-weight:800">Venue Hire</span></div>
+<div class="venue-page">
+<div class="venue-hero"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&h=500&fit=crop" alt="Function Room"></div>
+<h2 style="font-size:18px">Function Room — Booking Enquiry</h2>
+<p style="color:#aaa;font-size:13px;margin-top:6px;line-height:1.5">Perfect for birthdays, weddings, wakes, meetings & parties. Bar, kitchen, stage & parking available.</p>
+<div class="venue-bullets">
+<div class="bullet"><span>👥</span>Up to 120 Guests</div>
+<div class="bullet"><span>🍺</span>Licensed Bar</div>
+<div class="bullet"><span>🅿️</span>Free Parking</div>
+<div class="bullet"><span>🍽️</span>Kitchen Access</div>
+</div>
+<div class="form-card">
+<label>YOUR NAME</label><input id="v_name" placeholder="John Smith">
+<label>PHONE / WHATSAPP</label><input id="v_phone" placeholder="07...">
+<label>DATE WANTED</label><input id="v_date" type="date">
+<label>TYPE OF EVENT</label><select id="v_type"><option>Birthday Party</option><option>Wedding / Reception</option><option>Funeral / Wake</option><option>Meeting / Group</option><option>Charity / Fundraiser</option><option>Other</option></select>
+<label>NUMBER OF GUESTS</label><input id="v_guests" type="number" placeholder="e.g. 60">
+<label>MESSAGE</label><textarea id="v_msg" rows="3" placeholder="Tell us about your event..."></textarea>
+<button onclick="submitVenue()">Send Enquiry to Sally</button>
+<div style="display:flex;gap:10px;margin-top:12px"><button onclick="callSally()" style="background:#222;box-shadow:none;border:1px solid #333">📞 Call Sally 07940 981301</button><button onclick="whatsAppSally()" style="background:#25D366;box-shadow:none">WhatsApp Sally</button></div>
+<p style="font-size:10px;color:#666;text-align:center;margin-top:10px">Enquiry will open WhatsApp & email — no data stored in app</p>
+</div>
+</div>
+</div>
+<script>
+const events=[
+{id:1,title:"Queen Tribute Live",date:"2026-11-14",time:"Doors 7pm Show 8pm",desc:"Bohemian Night - Tickets £18 - The ultimate Queen experience",poster:"https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1080&h=1350&fit=crop"},
+{id:2,title:"80s Night Extravaganza",date:"2026-11-22",time:"Doors 7:30pm",desc:"Live band + DJ till late - Fancy dress encouraged",poster:"https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1080&h=1350&fit=crop"},
+{id:3,title:"ABBA Magic",date:"2026-12-05",time:"Doors 7pm Show 8:30pm",desc:"Dancing Queen - All the hits live",poster:"https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1080&h=1350&fit=crop"},
+{id:4,title:"Soul & Motown",date:"2026-12-12",time:"Doors 8pm",desc:"Live 10-piece band - Tickets £15",poster:"https://images.unsplash.com/photo-1459749411175-04bf52978dd5?w=1080&h=1350&fit=crop"},
+{id:5,title:"Christmas Party Night",date:"2026-12-19",time:"7pm till 1am",desc:"3 course meal + live entertainment + disco",poster:"https://images.unsplash.com/photo-1513151233558-d860c5398176?w=1080&h=1350&fit=crop"},
+{id:6,title:"New Years Eve Gala",date:"2026-12-31",time:"7:30pm till 1am",desc:"Black tie, live band, buffet & countdown",poster:"https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1080&h=1350&fit=crop"}
+];
+const iconCalendar=`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v3M16 2v3M3 9h18"/><path d="M7 13h3M7 17h3M12 13h5M12 17h5"/></svg>`;
+const iconTrophy=`<svg viewBox="0 0 24 24"><path d="M6 4h12v4a6 6 0 0 1-6 6 6 6 0 0 1-6-6V4z"/><path d="M4 6a2 2 0 0 0 2 3"/><path d="M20 6a2 2 0 0 1-2 3"/><path d="M9 20h6"/><path d="M12 14v6"/></svg>`;
+const iconSocial=`<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 19a6 6 0 0 1 6-6"/><circle cx="17" cy="10" r="2.5"/><path d="M21 19a4.5 4.5 0 0 0-4.5-4.5"/></svg>`;
+const iconBuilding=`<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h6M9 19h6"/><path d="M5 7h14"/></svg>`;
+const iconClock=`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v5l3 2"/></svg>`;
+const iconPhone=`<svg viewBox="0 0 24 24"><path d="M6.1 3.5a1.2 1.2 0 0 0-1.2 1.2c0 8.4 6.8 15.2 15.2 15.2a1.2 1.2 0 0 0 1.2-1.2l-1.3-4.3a1.2 1.2 0 0 0-1.1-.8l-3.2-.2a1.2 1.2 0 0 0-1 .5l-1.3 1.8a13.3 13.3 0 0 1-4.9-4.9L9.3 9a1.2 1.2 0 0 0 .5-1l-.2-3.2a1.2 1.2 0 0 0-.8-1.1L4.5 2.4z"/></svg>`;
+const buttons=[
+{label:"All Upcoming Events",icon:iconCalendar,active:true,action:"list"},
+{label:"Sports Groups",icon:iconTrophy,active:false,action:"soon"},
+{label:"Social Groups",icon:iconSocial,active:false,action:"soon"},
+{label:"Venue Hire",icon:iconBuilding,active:false,action:"venue"},
+{label:"Opening Times",icon:iconClock,active:false,action:"soon"},
+{label:"Contact Us",icon:iconPhone,active:false,action:"soon"}
+];
+const carousel=document.getElementById('carousel');
+const dots=document.getElementById('dots');
+function getUpcoming(){return events.filter(e=>new Date(e.date)>=new Date(new Date().setHours(0,0,0,0))).sort((a,b)=>new Date(a.date)-new Date(b.date));}
+function renderCarousel(){
+carousel.innerHTML='';dots.innerHTML='';
+const upcoming=getUpcoming().slice(0,6);
+upcoming.forEach((ev,i)=>{
+const card=document.createElement('div');card.className='poster-card';
+card.innerHTML=`<img src="${ev.poster}" loading="lazy"><button class="details-btn">Details</button><div class="poster-info"><div class="poster-title">${ev.title}</div><div style="font-size:11px;color:#ccc;margin-top:2px">${ev.date} • ${ev.time}</div></div>`;
+card.onclick=()=>openDetail(ev);carousel.appendChild(card);
+const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dots.appendChild(dot);
+});
+}
+let autoIndex=0;
+function autoScroll(){
+const filtered=getUpcoming().slice(0,6);
+if(filtered.length<=1)return;
+autoIndex=(autoIndex+1)%filtered.length;
+const card=carousel.children[autoIndex];
+if(card){
+const left = card.offsetLeft - carousel.offsetLeft - (carousel.parentElement.offsetWidth*0.08);
+carousel.scrollTo({left:left,behavior:'smooth'});
+}
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===autoIndex));
+}
+let interval=setInterval(autoScroll,4000);
+carousel.addEventListener('touchstart',()=>clearInterval(interval));
+carousel.addEventListener('touchend',()=>{clearInterval(interval);interval=setInterval(autoScroll,4000);});
+carousel.addEventListener('scroll',()=>{
+let closest=0;let minDist=Infinity;
+const pad = carousel.parentElement.offsetWidth*0.08;
+for(let i=0;i<carousel.children.length;i++){
+const dist=Math.abs(carousel.scrollLeft - (carousel.children[i].offsetLeft - carousel.offsetLeft - pad));
+if(dist<minDist){minDist=dist;closest=i;}
+}
+autoIndex=closest;
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===closest));
+});
+function renderGrid(){
+const grid=document.getElementById('grid');grid.innerHTML='';
+buttons.forEach(b=>{
+const div=document.createElement('div');div.className='box '+(b.active?'active':'inactive');
+div.innerHTML=`<div class="icon-wrap">${b.icon}</div><div class="box-label">${b.label.toUpperCase()}</div>${!b.active&&b.action==='soon'?'<div class="soon-badge">SOON</div>':''}`;
+div.onclick=()=>{
+if(b.action==='list')openList();
+else if(b.action==='venue')openVenue();
+else if(b.action==='soon'){ if(window.AppBridge && window.AppBridge.open){ window.AppBridge.open(b.label); } else { alert(b.label+' - This will link to the main app when ready. For now, coming soon.'); } }
+};
+grid.appendChild(div);
+});
+}
+function openDetail(ev){
+window.currentEvent=ev;
+document.getElementById('detailPoster').src=ev.poster;
+document.getElementById('detailTitle').textContent=ev.title;
+document.getElementById('detailDate').textContent='📅 '+ev.date;
+document.getElementById('detailTime').textContent='🕐 '+ev.time;
+document.getElementById('detailDesc').textContent=ev.desc;
+document.getElementById('detailOverlay').classList.add('open');
+}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');}
+function shareEvent(){if(!window.currentEvent)return;const ev=window.currentEvent;const text=`${ev.title} - ${ev.date} ${ev.time} - ${ev.desc} - Blackburn Leisure`;if(navigator.share){navigator.share({title:ev.title,text:text});}else{prompt('Copy to share:',text);}}
+function openList(){
+const filtered=getUpcoming();
+const cont=document.getElementById('listContent');cont.innerHTML='';
+filtered.forEach(ev=>{
+const row=document.createElement('div');row.className='list-item';
+row.innerHTML=`<img src="${ev.poster}"><div style="flex:1"><div style="font-weight:800;font-size:14px">${ev.title}</div><div style="font-size:11px;color:#aaa;margin-top:2px">📅 ${ev.date} • ${ev.time}</div></div><button style="background:#B026FF;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800">Details</button>`;
+row.onclick=()=>{closeList();openDetail(ev);};cont.appendChild(row);
+});
+document.getElementById('listOverlay').classList.add('open');
+}
+function closeList(){document.getElementById('listOverlay').classList.remove('open');}
+function openVenue(){document.getElementById('venueOverlay').classList.add('open');}
+function closeVenue(){document.getElementById('venueOverlay').classList.remove('open');}
+function getVenueData(){return{ name:document.getElementById('v_name').value, phone:document.getElementById('v_phone').value, date:document.getElementById('v_date').value, type:document.getElementById('v_type').value, guests:document.getElementById('v_guests').value, msg:document.getElementById('v_msg').value};}
+function buildVenueMessage(d){return `VENUE HIRE ENQUIRY - Blackburn Leisure%0A%0AName: ${encodeURIComponent(d.name)}%0APhone: ${encodeURIComponent(d.phone)}%0ADate wanted: ${encodeURIComponent(d.date)}%0AType: ${encodeURIComponent(d.type)}%0AGuests: ${encodeURIComponent(d.guests)}%0A%0AMessage: ${encodeURIComponent(d.msg)}`;}
+function submitVenue(){
+const d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
+const msg=buildVenueMessage(d);
+const wa=`https://wa.me/447940981301?text=${msg}`;
+window.open(wa,'_blank');
+const mailSubject=encodeURIComponent('Venue Hire Enquiry - '+d.date);
+const mailBody=decodeURIComponent(msg).replace(/%0A/g,'\n');
+setTimeout(()=>{window.location.href=`mailto:?subject=${mailSubject}&body=${encodeURIComponent(mailBody)}`;},500);
+}
+function callSally(){window.location.href='tel:07940981301';}
+function whatsAppSally(){window.open('https://wa.me/447940981301?text=Hi%20Sally,%20enquiry%20about%20venue%20hire%20at%20Blackburn%20Leisure','_blank');}
+let deferredPrompt;
+const banner=document.getElementById('installBanner');
+const installBtn=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;banner.classList.add('show');});
+installBtn.addEventListener('click',async()=>{
+if(deferredPrompt){deferredPrompt.prompt();const {outcome}=await deferredPrompt.userChoice;deferredPrompt=null;banner.classList.remove('show');}
+else{alert('To install: Tap Share → Add to Home Screen');}
+});
+setTimeout(()=>{
+if(window.navigator.standalone===false || !window.matchMedia('(display-mode: standalone)').matches){
+if(!deferredPrompt)banner.classList.add('show');
+}
+},2000);
+window.AppBridge={ version:'1.0', open:(screen)=>{ console.log('Bridge: request to open '+screen); } };
+renderCarousel();renderGrid();
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
