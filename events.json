@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Queen Tribute Live",
+    "date": "2026-11-14",
+    "time": "Doors 7pm Show 8pm",
+    "desc": "Bohemian Night - Tickets \u00a318 - The ultimate Queen experience",
+    "poster": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1080&h=1350&fit=crop"
+  },
+  {
+    "id": 2,
+    "title": "80s Night Extravaganza",
+    "date": "2026-11-22",
+    "time": "Doors 7:30pm",
+    "desc": "Live band + DJ till late - Fancy dress encouraged",
+    "poster": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1080&h=1350&fit=crop"
+  },
+  {
+    "id": 3,
+    "title": "ABBA Magic",
+    "date": "2026-12-05",
+    "time": "Doors 7pm Show 8:30pm",
+    "desc": "Dancing Queen - All the hits live",
+    "poster": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=1080&h=1350&fit=crop"
+  }
+]
