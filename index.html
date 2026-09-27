@@ -41,13 +41,13 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Se
 .subtitle{margin-top:14px;font-size:15px}
 .section-title{padding:0 16px;margin-top:22px;font-size:16px;font-weight:800;color:#fff;letter-spacing:0.3px}
 .carousel-wrap{margin-top:12px;overflow:hidden;position:relative}
-.carousel{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
 .carousel::-webkit-scrollbar{display:none}
-.poster-card{min-width:240px;width:240px;height:320px;scroll-snap-align:center;border-radius:18px;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.6);overflow:hidden;position:relative;background:#111;flex-shrink:0;cursor:pointer}
+.poster-card{min-width:86%;width:86%;max-width:360px;height:480px;scroll-snap-align:center;border-radius:20px;border:2.5px solid #B026FF;box-shadow:0 0 22px rgba(176,38,255,0.7),0 0 40px rgba(176,38,255,0.25);overflow:hidden;position:relative;background:#111;flex-shrink:0;cursor:pointer;margin:0 auto}
 .poster-card img{width:100%;height:100%;object-fit:cover}
-.poster-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.95));padding:36px 12px 10px}
-.poster-title{font-size:13px;font-weight:800}
-.details-btn{position:absolute;top:10px;right:10px;background:#B026FF;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800;box-shadow:0 0 10px #B026FF}
+.poster-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.96));padding:42px 14px 14px}
+.poster-title{font-size:15px;font-weight:900;line-height:1.2}
+.details-btn{position:absolute;top:12px;right:12px;background:#B026FF;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-size:11px;font-weight:900;box-shadow:0 0 12px #B026FF}
 .grid{padding:18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .box{height:168px;background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform 0.15s;border:2px solid #2a0a3a;box-shadow:0 0 18px rgba(176,38,255,0.25), inset 0 0 12px rgba(176,38,255,0.08)}
 .box:active{transform:scale(0.97)}
@@ -90,10 +90,10 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Se
 <body>
 <div class="header">
 <img id="logoTap" src="logo-400.png" class="logo-img" alt="Blackburn Leisure" style="cursor:pointer">
-<div class="subtitle neon-purple">BLACKBURN LEISURE COMMUNITY CLUB • FUNCTION ROOM</div>
+<div class="subtitle neon-purple">BLACKBURN LEISURE COMMUNITY CLUB • MAIN HALL</div>
 </div>
 
-<div class="section-title">🔥 WHAT'S ON — NEXT 4 EVENTS</div>
+<div class="section-title">🔥 WHAT'S ON — TAP TO SEE DETAILS</div>
 <div class="carousel-wrap">
 <div class="carousel" id="carousel"></div>
 <div class="dots" id="dots"></div>
@@ -249,34 +249,71 @@ function getUpcoming(){return events.filter(e=>new Date(e.date)>=new Date(new Da
 
 function renderCarousel(){
 carousel.innerHTML='';dots.innerHTML='';
-const upcoming=getUpcoming().slice(0,4);
+const upcoming=getUpcoming(); // ALL events, not just 4
 if(upcoming.length===0){
  carousel.innerHTML='<div style="padding:20px;color:#666;font-size:13px">No upcoming events — check back soon or follow Facebook /BlackburnLeisure</div>';
  return;
 }
 upcoming.forEach((ev,i)=>{
 const card=document.createElement('div');card.className='poster-card';
-card.innerHTML=`<img src="${ev.poster}" loading="lazy"><button class="details-btn">Details</button><div class="poster-info"><div class="poster-title">${ev.title}</div><div style="font-size:10px;color:#ccc;margin-top:2px">${ev.date}</div></div>`;
+card.innerHTML=`<img src="${ev.poster}" loading="lazy"><button class="details-btn">Details</button><div class="poster-info"><div class="poster-title">${ev.title}</div><div style="font-size:11px;color:#ddd;margin-top:4px">📅 ${ev.date} • ${ev.time||''}</div></div>`;
 card.onclick=()=>openDetail(ev);carousel.appendChild(card);
-const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dots.appendChild(dot);
+const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>{autoIndex=i;scrollToIndex(i);};dots.appendChild(dot);
 });
+autoIndex=0;
 }
+
 let autoIndex=0;
-function autoScroll(){
-const filtered=getUpcoming().slice(0,4);
-if(filtered.length===0)return;
-autoIndex=(autoIndex+1)%filtered.length;
-const cardWidth=254;
-carousel.scrollTo({left:autoIndex*cardWidth,behavior:'smooth'});
-document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===autoIndex));
+let interval=null;
+
+function getCardWidth(){
+ const card=carousel.querySelector('.poster-card');
+ if(!card) return 300;
+ return card.offsetWidth + 16; // card + gap
 }
-let interval=setInterval(autoScroll,4000);
-carousel.addEventListener('touchstart',()=>clearInterval(interval));
-carousel.addEventListener('touchend',()=>interval=setInterval(autoScroll,4000));
+
+function scrollToIndex(idx){
+ const upcoming=getUpcoming();
+ if(upcoming.length===0) return;
+ autoIndex=idx % upcoming.length;
+ const w=getCardWidth();
+ carousel.scrollTo({left:autoIndex*w,behavior:'smooth'});
+ document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===autoIndex));
+}
+
+function autoScroll(){
+ const upcoming=getUpcoming();
+ if(upcoming.length<=1) return;
+ scrollToIndex((autoIndex+1) % upcoming.length);
+}
+
+function startAuto(){
+ stopAuto();
+ interval=setInterval(autoScroll,3500);
+}
+function stopAuto(){
+ if(interval){clearInterval(interval);interval=null;}
+}
+
+carousel.addEventListener('touchstart',()=>stopAuto(),{passive:true});
+carousel.addEventListener('touchend',()=>startAuto(),{passive:true});
+carousel.addEventListener('mousedown',()=>stopAuto());
+carousel.addEventListener('mouseup',()=>startAuto());
+
+// Update dots on manual scroll
+let scrollTimeout;
 carousel.addEventListener('scroll',()=>{
-const idx=Math.round(carousel.scrollLeft/254);
-document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+ clearTimeout(scrollTimeout);
+ scrollTimeout=setTimeout(()=>{
+  const w=getCardWidth();
+  const idx=Math.round(carousel.scrollLeft/w);
+  autoIndex=idx;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+ },100);
 });
+
+// Start after render
+setTimeout(()=>startAuto(),1500);
 
 function renderGrid(){
 const grid=document.getElementById('grid');grid.innerHTML='';
