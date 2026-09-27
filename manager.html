@@ -36,11 +36,12 @@ button{width:100%;background:#B026FF;color:#fff;border:none;padding:14px;border-
 .preview{margin-top:16px;border-radius:16px;overflow:hidden;border:2px solid #B026FF;max-width:300px}
 .preview img{width:100%;display:block}
 .small{font-size:11px;color:#666;margin-top:8px;line-height:1.4}
+.success{background:#0a1a0a;border:1px solid #1a5a2a;border-radius:12px;padding:12px;margin-top:12px;font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
 <h1>MANAGER - CREATE EVENT</h1>
-<p style="color:#aaa;font-size:13px">Create event here → it will appear on customer app</p>
+<p style="color:#aaa;font-size:13px">Create event here → upload to GitHub → appears on app</p>
 
 <div class="card">
 <label>EVENT TITLE</label>
@@ -60,24 +61,30 @@ button{width:100%;background:#B026FF;color:#fff;border:none;padding:14px;border-
 
 <div id="previewWrap" class="preview" style="display:none">
 <img id="previewImg" src="">
+<p id="fileName" style="font-size:11px;color:#B026FF;padding:8px;text-align:center"></p>
 </div>
 
-<label>OR paste image URL (if already online)</label>
-<input id="posterUrl" placeholder="https://...">
+<div id="urlWrap" style="margin-top:12px">
+<label>OR paste image URL (if poster already online)</label>
+<input id="posterUrl" placeholder="https://... OR leave blank if uploading file">
+</div>
 
-<button onclick="addEvent()">SAVE EVENT → Generate new events.json</button>
+<button onclick="addEvent()">SAVE EVENT</button>
 
-<p class="small">This manager app for now will download a new events.json file. You upload that file to GitHub and customer app will instantly show new event. Later we connect it to database so it saves automatically.</p>
+<p class="small">If you upload a poster file, you will need to upload TWO files to GitHub: 1) the poster image itself, 2) the new events.json. Instructions will appear after saving.</p>
 
 <div id="output" style="display:none;margin-top:16px" class="card">
-<h3 style="font-size:14px">New events.json ready:</h3>
-<pre id="jsonOut" style="font-size:11px;white-space:pre-wrap;word-break:break-all;background:#000;padding:10px;border-radius:8px;margin-top:10px"></pre>
-<button onclick="downloadJson()">⬇️ Download events.json + Upload to GitHub</button>
+<h3 style="font-size:14px">✅ Ready to upload to GitHub:</h3>
+<div id="steps" class="success"></div>
+<pre id="jsonOut" style="font-size:11px;white-space:pre-wrap;word-break:break-all;background:#000;padding:10px;border-radius:8px;margin-top:10px;max-height:200px;overflow-y:auto"></pre>
+<button onclick="downloadJson()" style="background:#fff;color:#000">⬇️ Download events.json</button>
+<button id="downloadPosterBtn" onclick="downloadPoster()" style="display:none;background:#222;color:#fff;border:1px solid #444">⬇️ Download poster image</button>
 </div>
 </div>
 
 <script>
-let currentPosterBase64 = "";
+let currentFile = null;
+let currentFileName = "";
 let events = [];
 
 async function init(){
@@ -90,13 +97,23 @@ async function init(){
 document.getElementById('posterFile').addEventListener('change', function(e){
   const file = e.target.files[0];
   if(!file) return;
+  currentFile = file;
+  currentFileName = file.name.replace(/\s+/g,'-').toLowerCase();
   const reader = new FileReader();
   reader.onload = function(ev){
-    currentPosterBase64 = ev.target.result;
-    document.getElementById('previewImg').src = currentPosterBase64;
+    document.getElementById('previewImg').src = ev.target.result;
     document.getElementById('previewWrap').style.display='block';
+    document.getElementById('fileName').textContent = currentFileName;
   }
   reader.readAsDataURL(file);
+  document.getElementById('posterUrl').value = "";
+});
+
+document.getElementById('posterUrl').addEventListener('input', function(){
+  if(this.value){
+    currentFile = null;
+    document.getElementById('previewWrap').style.display='none';
+  }
 });
 
 function addEvent(){
@@ -104,13 +121,17 @@ function addEvent(){
   const date = document.getElementById('date').value;
   const time = document.getElementById('time').value;
   const desc = document.getElementById('desc').value;
-  let poster = document.getElementById('posterUrl').value || currentPosterBase64;
-  if(!poster){
-    // if file uploaded use base64, if not require URL
-    if(currentPosterBase64) poster=currentPosterBase64;
+  let posterUrlInput = document.getElementById('posterUrl').value.trim();
+  
+  let poster = "";
+  if(currentFile){
+    poster = currentFileName;
+  } else if(posterUrlInput){
+    poster = posterUrlInput;
   }
+
   if(!title || !date || !poster){
-    alert('Need title, date, and poster image');
+    alert('Need title, date, and poster image (upload file OR paste URL)');
     return;
   }
   const newEvent = {
@@ -118,8 +139,20 @@ function addEvent(){
     title, date, time, desc, poster
   };
   events.push(newEvent);
+  
   document.getElementById('jsonOut').textContent = JSON.stringify(events, null, 2);
+  
+  let stepsHtml = "";
+  if(currentFile){
+    stepsHtml = "<strong>1. Upload poster image:</strong><br>Go to GitHub → Add file → Upload → select <b>"+currentFileName+"</b> → Commit<br><br><strong>2. Upload events.json:</strong><br>Click Download events.json below → Then upload that file to GitHub (overwrite old events.json)";
+    document.getElementById('downloadPosterBtn').style.display='block';
+  } else {
+    stepsHtml = "<strong>1. Upload events.json:</strong><br>Click Download below → Go to GitHub → Upload this events.json (overwrite old one) → Commit<br><br>Customer app will show new event in 2 mins";
+    document.getElementById('downloadPosterBtn').style.display='none';
+  }
+  document.getElementById('steps').innerHTML = stepsHtml;
   document.getElementById('output').style.display='block';
+  window.scrollTo(0,document.body.scrollHeight);
 }
 
 function downloadJson(){
@@ -128,7 +161,14 @@ function downloadJson(){
   const a = document.createElement('a');
   a.href=url; a.download='events.json';
   a.click();
-  alert('Now go to GitHub → Upload this events.json → Commit → Customer app will show new event in 2 mins');
+}
+
+function downloadPoster(){
+  if(!currentFile) return;
+  const url = URL.createObjectURL(currentFile);
+  const a = document.createElement('a');
+  a.href=url; a.download=currentFileName;
+  a.click();
 }
 
 init();
