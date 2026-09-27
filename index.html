@@ -186,6 +186,10 @@ function getUpcoming(){return events.filter(e=>new Date(e.date)>=new Date(new Da
 function renderCarousel(){
 carousel.innerHTML='';dots.innerHTML='';
 const upcoming=getUpcoming().slice(0,6);
+if(upcoming.length===0){
+  carousel.innerHTML='<div style="min-width:84vw;width:84vw;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed #B026FF;border-radius:18px;background:#0a0a0a;color:#666;text-align:center;padding:20px"><div style="font-size:32px">📅</div><div style="font-size:14px;font-weight:800;color:#fff;margin-top:8px">No upcoming events</div><div style="font-size:11px;margin-top:4px">Tap gold logo 5 times to add real event</div></div>';
+  return;
+}
 upcoming.forEach((ev,i)=>{
 const card=document.createElement('div');card.className='poster-card';
 card.innerHTML=`<img src="${ev.poster}" loading="lazy"><button class="details-btn">Details</button><div class="poster-info"><div class="poster-title">${ev.title}</div><div style="font-size:11px;color:#ccc;margin-top:2px">${ev.date} • ${ev.time}</div></div>`;
@@ -306,11 +310,31 @@ document.addEventListener('DOMContentLoaded', ()=>{
     fileInput.addEventListener('change', (e)=>{
       const file = e.target.files[0];
       if(!file) return;
+      // auto compress large photos
+      const img = new Image();
       const reader = new FileReader();
       reader.onload = (ev)=>{
-        managerPosterBase64 = ev.target.result;
-        document.getElementById('m_previewImg').src = managerPosterBase64;
-        document.getElementById('m_previewWrap').style.display='block';
+        img.onload = ()=>{
+          const maxW = 800;
+          const maxH = 1200;
+          let w = img.width, h = img.height;
+          if(w>maxW || h>maxH){
+            const ratio = Math.min(maxW/w, maxH/h);
+            w = Math.round(w*ratio);
+            h = Math.round(h*ratio);
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w; canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img,0,0,w,h);
+          // compress to ~150kb jpeg
+          managerPosterBase64 = canvas.toDataURL('image/jpeg', 0.7);
+          document.getElementById('m_previewImg').src = managerPosterBase64;
+          document.getElementById('m_previewWrap').style.display='block';
+          const kb = Math.round(managerPosterBase64.length/1024);
+          console.log('Compressed poster to '+kb+'KB');
+        };
+        img.src = ev.target.result;
       };
       reader.readAsDataURL(file);
     });
@@ -330,10 +354,7 @@ function managerAddEvent(){
   const desc = document.getElementById('m_desc').value.trim();
   let poster = document.getElementById('m_posterUrl').value.trim() || managerPosterBase64;
   if(!title || !date || !poster){ alert('Need title, date, poster - upload a poster photo'); return; }
-  // warn if poster is huge base64
-  if(poster.length > 500000){
-    if(!confirm('Poster photo is very large ('+Math.round(poster.length/1024)+'KB). This may use lots of storage. Continue?')) return;
-  }
+  // poster now auto-compressed to ~150kb
   const newEv = { id: Date.now(), title, date, time, desc, poster };
   events.push(newEv);
   try{
@@ -393,26 +414,35 @@ function managerExport(){
   alert('✅ events.json downloaded!\n\nNOW: Go to GitHub → blackburn-customer-app → Add file → Upload events.json → Commit.\n\nThen ALL customers will see your new list (old test posters gone).');
 }
 
-// Override loadEvents to also check localStorage
-const originalLoadEvents = loadEvents;
+// FIXED loadEvents: ALWAYS fetch server first, so empty server = empty app
 loadEvents = async function(){
-  const saved = localStorage.getItem('blackburn_events');
-  if(saved !== null){
-    try{
-      events = JSON.parse(saved);
-      renderCarousel(); renderGrid();
-      return;
-    }catch(e){}
-  }
   try{
     const res = await fetch('./events.json?v='+Date.now());
     if(!res.ok) throw new Error('no events.json');
-    events = await res.json();
-    try{ localStorage.setItem('blackburn_events', JSON.stringify(events)); }catch(e){}
+    const serverEvents = await res.json();
+    events = serverEvents;
+    // clear old localStorage if server is empty
+    if(serverEvents.length===0){
+      localStorage.removeItem('blackburn_events');
+    } else {
+      try{ localStorage.setItem('blackburn_events', JSON.stringify(events)); }catch(e){}
+    }
   }catch(e){
-    events=[];
+    // fallback to localStorage only if server fails
+    const saved = localStorage.getItem('blackburn_events');
+    if(saved !== null){
+      try{
+        events = JSON.parse(saved);
+      }catch(e){ events=[]; }
+    } else {
+      events=[];
+    }
   }
   renderCarousel(); renderGrid();
+  // clear old sw cache on load
+  if('caches' in window){
+    caches.keys().then(keys=>keys.forEach(k=>{ if(k.includes('blackburn')){ /* keep but will update */ } }));
+  }
 };
 
 loadEvents();
