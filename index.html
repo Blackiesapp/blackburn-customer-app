@@ -422,9 +422,18 @@ function closeContact(){ document.getElementById('contactOverlay').classList.rem
 function openVenue(){document.getElementById('venueOverlay').classList.add('open');}
 function closeVenue(){document.getElementById('venueOverlay').classList.remove('open');}
 function getVenueData(){return{ name:document.getElementById('v_name').value, phone:document.getElementById('v_phone').value, date:document.getElementById('v_date').value, type:document.getElementById('v_type').value, guests:document.getElementById('v_guests').value, msg:document.getElementById('v_msg').value};}
+var ENQ_URL='https://script.google.com/macros/s/AKfycbxfq1hzEjEOlrlavQH-ta2AZjpSyZvfk5ZqiD7hsL9zjVzwmCQiVWaVnT9ubFBPAcNV-Q/exec';
+function sendEnq(d,done){
+ fetch(ENQ_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)}).then(done).catch(function(){alert('Sorry, that did not send. Please call us.');});
+}
 function submitVenue(){
-const d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
-fetch('https://script.google.com/macros/s/AKfycbxfq1hzEjEOlrlavQH-ta2AZjpSyZvfk5ZqiD7hsL9zjVzwmCQiVWaVnT9ubFBPAcNV-Q/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)}).then(()=>{alert('Thanks '+d.name+'! Your enquiry has been sent. '+((C.venue||{}).note||'We will be in touch soon.'));['v_name','v_phone','v_date','v_guests','v_msg'].forEach(i=>document.getElementById(i).value='');}).catch(()=>{alert('Sorry, that did not send. Please call us instead.');});
+ var d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
+ sendEnq(d,function(){alert('Thanks '+d.name+'! '+((C.venue||{}).note||'We will be in touch.'));});
+}
+function submitMsg(){
+ var n=document.getElementById('m_name').value.trim(),p=document.getElementById('m_phone').value.trim(),m=document.getElementById('m_msg').value.trim();
+ if(!n||!p||!m){alert('Please fill in your name, phone or email, and message');return;}
+ sendEnq({name:n,phone:p,type:'General',msg:m},function(){alert('Thanks '+n+'! Your message has been sent.');['m_name','m_phone','m_msg'].forEach(function(i){document.getElementById(i).value='';});});
 }
 function callSally(){const p=getPhone();if(p)window.location.href='tel:'+p;}
 
