@@ -1,76 +1,26 @@
 {
+ "contact": {
+  "address": "Prescott Ave, Brough HU15 1BB",
+  "heading": "Blackburn Leisure",
+  "lines": [
+   {
+    "url": "07940981301",
+    "label": "PHONE",
+    "value": "Sally — 07940 981301",
+    "type": "phone"
+   },
+   {
+    "value": "/BlackburnLeisure",
+    "url": "https://www.facebook.com/BlackburnLeisure",
+    "label": "FACEBOOK",
+    "type": "link"
+   }
+  ]
+ },
  "news": [],
- "social": {
-  "items": [
-   {
-    "name": "Art Group",
-    "icon": "🎨",
-    "soon": true,
-    "desc": "Details coming soon — contact Sally for info about our Art Group."
-   },
-   {
-    "desc": "Details coming soon — contact Sally for info about our Carers Group.",
-    "name": "Carers Group",
-    "soon": true,
-    "icon": "❤️"
-   },
-   {
-    "soon": true,
-    "icon": "💃",
-    "name": "Line Dancing",
-    "desc": "Details coming soon — contact Sally for info about Line Dancing."
-   },
-   {
-    "name": "Pilates",
-    "icon": "🧘",
-    "soon": true,
-    "desc": "Details coming soon — contact Sally for info about Pilates."
-   }
-  ],
-  "intro": "Tap a group for details — contact Sally for info."
- },
- "footer": "Prescott Ave, Brough HU15 1BB • 07940 981301 • Facebook: /BlackburnLeisure • Community Club — Not for Profit",
- "sports": {
-  "items": [
-   {
-    "name": "Football",
-    "icon": "⚽",
-    "desc": "We have a fantastic football set up and teams through all age groups."
-   },
-   {
-    "desc": "We have amazing squash courts and a welcoming squash club",
-    "name": "Squash",
-    "icon": "data:image/png;base64,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"
-   },
-   {
-    "desc": "We have four snooker tables and a snooker team. Pop along, grab a pint and have a frame.",
-    "name": "Snooker",
-    "icon": "🎱"
-   },
-   {
-    "desc": "Get in touch if you're interested in getting involved with a bowls team.",
-    "name": "Bowls",
-    "icon": ""
-   },
-   {
-    "icon": "🎾",
-    "name": "Tennis",
-    "desc": "We have a tennis court and tennis club. Get in touch for details."
-   },
-   {
-    "name": "Gym",
-    "icon": "💪",
-    "desc": "We have a superb gym on our premises. Get in touch for details."
-   },
-   {
-    "name": "Darts",
-    "icon": "🎯",
-    "desc": "We have three dart boards and darts teams. Come down and chuck some arrows!"
-   }
-  ],
-  "intro": "Tap a sport for details."
- },
  "venue": {
+  "text": "Our main hall is an amazing space — beautifully set up for up to 200 guests with dance floor, big screen, stage, licensed bar and free parking. As you can see from the photos, it works perfectly for weddings, birthdays, parties, wakes, live music and community group gatherings. We can also provide catering — food and drinks packages to suit your event. Get in touch for availability and costs.",
+  "note": "Please call Sally on 07940 981301 to confirm",
   "bullets": [
    {
     "text": "Up to 200 guests",
@@ -81,8 +31,8 @@
     "icon": "🎬"
    },
    {
-    "icon": "🎤",
-    "text": "Stage"
+    "text": "Stage",
+    "icon": "🎤"
    },
    {
     "text": "Free Parking",
@@ -93,41 +43,93 @@
     "icon": "🍔"
    },
    {
-    "icon": "♿",
-    "text": "Fully Accessible"
+    "text": "Fully Accessible",
+    "icon": "♿"
    }
   ],
-  "title": "Hire Our Amazing Function Room",
-  "note": "Please call Sally on 07940 981301 to confirm",
-  "text": "Our main hall is an amazing space — beautifully set up for up to 200 guests with dance floor, big screen, stage, licensed bar and free parking. As you can see from the photos, it works perfectly for weddings, birthdays, parties, wakes, live music and community group gatherings. We can also provide catering — food and drinks packages to suit your event. Get in touch for availability and costs."
+  "title": "Hire Our Amazing Function Room"
  },
- "contact": {
-  "lines": [
+ "version": 2,
+ "footer": "Prescott Ave, Brough HU15 1BB • 07940 981301 • Facebook: /BlackburnLeisure • Community Club — Not for Profit",
+ "sports": {
+  "items": [
    {
-    "value": "Sally — 07940 981301",
-    "url": "07940981301",
-    "type": "phone",
-    "label": "PHONE"
+    "desc": "We have a fantastic football set up and teams through all age groups.",
+    "name": "Football",
+    "icon": "⚽"
    },
    {
-    "type": "link",
-    "label": "FACEBOOK",
-    "url": "https://www.facebook.com/BlackburnLeisure",
-    "value": "/BlackburnLeisure"
+    "icon": "data:image/png;base64,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",
+    "desc": "We have amazing squash courts and a welcoming squash club",
+    "name": "Squash"
+   },
+   {
+    "icon": "🎱",
+    "name": "Snooker",
+    "desc": "We have four snooker tables and a snooker team. Pop along, grab a pint and have a frame."
+   },
+   {
+    "desc": "Get in touch if you're interested in getting involved with a bowls team.",
+    "name": "Bowls",
+    "icon": ""
+   },
+   {
+    "desc": "We have a tennis court and tennis club. Get in touch for details.",
+    "name": "Tennis",
+    "icon": "🎾"
+   },
+   {
+    "desc": "We have a superb gym on our premises. Get in touch for details.",
+    "name": "Gym",
+    "icon": "💪"
+   },
+   {
+    "name": "Darts",
+    "desc": "We have three dart boards and darts teams. Come down and chuck some arrows!",
+    "icon": "🎯"
    }
   ],
-  "heading": "Blackburn Leisure",
-  "address": "Prescott Ave, Brough HU15 1BB"
+  "intro": "Tap a sport for details."
+ },
+ "social": {
+  "items": [
+   {
+    "icon": "🎨",
+    "desc": "Details coming soon — contact Sally for info about our Art Group.",
+    "name": "Art Group",
+    "soon": true
+   },
+   {
+    "desc": "Details coming soon — contact Sally for info about our Carers Group.",
+    "name": "Carers Group",
+    "soon": true,
+    "icon": "❤️"
+   },
+   {
+    "icon": "💃",
+    "desc": "Details coming soon — contact Sally for info about Line Dancing.",
+    "name": "Line Dancing",
+    "soon": true
+   },
+   {
+    "icon": "🧘",
+    "soon": true,
+    "name": "Pilates",
+    "desc": "Details coming soon — contact Sally for info about Pilates."
+   }
+  ],
+  "intro": "Tap a group for details — contact Sally for info."
  },
  "times": {
+  "note": "Times may vary on event days — check Facebook",
   "rows": [
    {
     "day": "Monday",
     "hours": "3pm – Late"
    },
    {
-    "day": "Tuesday",
-    "hours": "3pm – Late"
+    "hours": "3pm – Late",
+    "day": "Tuesday"
    },
    {
     "hours": "3pm – Late",
@@ -146,11 +148,9 @@
     "day": "Saturday"
    },
    {
-    "hours": "10am – Late",
-    "day": "Sunday"
+    "day": "Sunday",
+    "hours": "10am – Late"
    }
-  ],
-  "note": "Times may vary on event days — check Facebook"
- },
- "version": 2
+  ]
+ }
 }
