@@ -442,17 +442,7 @@ if(!deferredPrompt)banner.classList.add('show');
 }
 },2000);
 
-// 5-tap on logo to open manager
-let tapCount=0;let lastTap=0;
-const logoEl=document.getElementById('logoTap');
-if(logoEl){
-  logoEl.addEventListener('click',()=>{
-    const now=Date.now();
-    if(now-lastTap>2000)tapCount=0;
-    tapCount++;lastTap=now;
-    if(tapCount>=5){tapCount=0;window.location.href='./manager.html';}
-  });
-}
+
 renderCarousel();renderGrid();
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
