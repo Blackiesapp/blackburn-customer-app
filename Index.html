@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Blackburn Leisure</title>
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Blackburn Leisure">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100dvh;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+.neon-purple{color:#B026FF;text-shadow:0 0 10px #B026FF,0 0 20px #B026FF;font-weight:900;letter-spacing:1px}
+.header{padding:18px 0 8px;text-align:center}
+.logo-img{width:110px;height:110px;border-radius:24px;box-shadow:0 0 18px rgba(212,175,55,0.4);border:1px solid #222}
+.subtitle{margin-top:14px;font-size:15px}
+.section-title{padding:0 16px;margin-top:22px;font-size:16px;font-weight:800;color:#fff;letter-spacing:0.3px}
+.carousel-wrap{margin-top:12px;overflow:hidden;position:relative}
+.carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+.carousel::-webkit-scrollbar{display:none}
+.poster-card{min-width:86%;width:86%;max-width:360px;height:480px;scroll-snap-align:center;border-radius:20px;border:2.5px solid #B026FF;box-shadow:0 0 22px rgba(176,38,255,0.7),0 0 40px rgba(176,38,255,0.25);overflow:hidden;position:relative;background:#111;flex-shrink:0;cursor:pointer;margin:0 auto}
+.poster-card img{width:100%;height:100%;object-fit:cover}
+.poster-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.96));padding:42px 14px 14px}
+.poster-title{font-size:15px;font-weight:900;line-height:1.2}
+.details-btn{position:absolute;top:12px;right:12px;background:#B026FF;color:#fff;border:none;padding:8px 14px;border-radius:20px;font-size:11px;font-weight:900;box-shadow:0 0 12px #B026FF}
+.grid{padding:18px 14px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.box{height:168px;background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform 0.15s;border:2px solid #2a0a3a;box-shadow:0 0 18px rgba(176,38,255,0.25), inset 0 0 12px rgba(176,38,255,0.08)}
+.box:active{transform:scale(0.97)}
+.box.active{border-color:#B026FF;box-shadow:0 0 22px rgba(176,38,255,0.8), 0 0 40px rgba(176,38,255,0.25), inset 0 0 14px rgba(176,38,255,0.12)}
+.icon-wrap{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;filter:drop-shadow(0 0 8px #B026FF) drop-shadow(0 0 18px rgba(176,38,255,0.6))}
+.icon-wrap svg{width:44px;height:44px;stroke:#B026FF;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.box-label{font-size:13px;font-weight:800;letter-spacing:0.3px;text-align:center;color:#fff;line-height:1.2;padding:0 6px}
+.footer{text-align:center;padding:22px 14px 30px;color:#888;font-size:11px;line-height:1.6;border-top:1px solid #111;margin-top:10px}
+.install-banner{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:2px solid #B026FF;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;z-index:100;transform:translateY(100%);transition:transform 0.3s}
+.install-banner.show{transform:translateY(0)}
+.install-banner button{background:#B026FF;color:#fff;border:none;padding:8px 16px;border-radius:20px;font-weight:800;font-size:13px}
+.detail-overlay{position:fixed;inset:0;background:#000;z-index:200;overflow-y:auto;display:none;padding-bottom:40px}
+.detail-overlay.open{display:block}
+.home-btn{position:sticky;top:0;z-index:5;background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #222}
+.home-btn button{background:#222;color:#fff;border:1px solid #444;padding:8px 16px;border-radius:20px;font-weight:700}
+.detail-poster{width:100%;max-width:420px;margin:16px auto;display:block;border-radius:16px;border:2px solid #B026FF;box-shadow:0 0 20px rgba(176,38,255,0.5)}
+.detail-meta{padding:16px;text-align:center}
+.detail-meta h2{font-size:20px;margin-bottom:8px}
+.detail-meta p{color:#aaa;font-size:14px;line-height:1.5}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dot{width:6px;height:6px;border-radius:50%;background:#333}
+.dot.active{background:#B026FF;box-shadow:0 0 6px #B026FF}
+.list-overlay{position:fixed;inset:0;background:#000;z-index:150;overflow-y:auto;display:none}
+.list-overlay.open{display:block}
+.list-item{display:flex;gap:12px;padding:14px;border-bottom:1px solid #111;align-items:center}
+.list-item img{width:60px;height:84px;border-radius:10px;object-fit:cover;border:1.5px solid #B026FF;box-shadow:0 0 10px rgba(176,38,255,0.4)}
+.list-item.cancelled img{filter:grayscale(1) brightness(0.6);border-color:#555;box-shadow:none}
+.list-item.cancelled .lt{color:#888;text-decoration:line-through}
+.badge-cancel{display:inline-block;background:#c0152f;color:#fff;font-size:10px;font-weight:900;padding:3px 8px;border-radius:10px;margin-top:4px;letter-spacing:0.5px}
+.apology{background:#2a0a10;border:1px solid #c0152f;border-radius:14px;padding:14px;margin:14px 16px 0;color:#fff;font-size:14px;line-height:1.5}
+.tickets{background:#111;border:1px solid #333;border-radius:14px;padding:12px;margin:12px 16px 0;font-size:14px;font-weight:700}
+.tickets small{display:block;color:#aaa;font-weight:400;margin-top:4px}
+.venue-page{padding:16px}
+.venue-hero{border-radius:16px;overflow:hidden;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);margin-bottom:16px}
+.venue-hero img{width:100%;height:200px;object-fit:cover;display:block}
+.venue-bullets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.bullet{background:#111;border:1px solid #222;border-radius:12px;padding:10px;text-align:center;font-size:12px;font-weight:700}
+.bullet span{display:block;font-size:18px;margin-bottom:4px}
+.form-card{background:#0f0f0f;border:1px solid #222;border-radius:16px;padding:14px;margin-top:16px}
+.form-card input,.form-card select,.form-card textarea{width:100%;background:#000;border:1px solid #333;color:#fff;border-radius:10px;padding:12px;margin:6px 0 12px;font-size:14px}
+.form-card label{font-size:11px;color:#aaa;font-weight:800;letter-spacing:0.5px}
+.form-card button{width:100%;background:#B026FF;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:14px;box-shadow:0 0 16px rgba(176,38,255,0.6);margin-top:6px}
+.small-box{height:130px}
+</style>
+</head>
+<body>
+<div class="header">
+<img id="logoTap" src="logo-400.png" class="logo-img" alt="Blackburn Leisure" style="cursor:pointer">
+<div class="subtitle neon-purple">BLACKBURN LEISURE COMMUNITY CLUB • MAIN HALL</div>
+</div>
+
+<div class="section-title">🔥 WHAT'S ON — TAP TO SEE DETAILS</div>
+<div class="carousel-wrap">
+<div class="carousel" id="carousel"></div>
+<div class="dots" id="dots"></div>
+</div>
+
+<div class="section-title">EXPLORE</div>
+<div class="grid" id="grid"></div>
+
+<div class="footer">
+Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br>Community Club — Not for Profit
+</div>
+
+<div class="install-banner" id="installBanner"><span>📲 Install Blackburn App</span><button id="installBtn">Install</button></div>
+
+<!-- EVENT DETAIL -->
+<div class="detail-overlay" id="detailOverlay">
+<div class="home-btn"><button onclick="closeDetail()">← HOME</button></div>
+<img id="detailPoster" class="detail-poster" src="">
+<div class="detail-meta"><h2 id="detailTitle"></h2><p id="detailDate"></p><p id="detailTime"></p><p id="detailDesc" style="margin-top:12px;color:#fff"></p></div>
+<div id="detailApology" class="apology" style="display:none"></div>
+<div id="detailTickets" class="tickets" style="display:none"></div>
+<div class="form-card" id="shareWrap" style="margin:16px"><button onclick="shareEvent()">📤 Share This Event</button></div>
+</div>
+
+<!-- ALL EVENTS LIST -->
+<div class="list-overlay" id="listOverlay">
+<div class="home-btn"><button onclick="closeList()">← HOME</button><span style="margin-left:10px;font-weight:800">All Upcoming Events</span></div>
+<div id="listContent"></div>
+</div>
+
+<!-- SPORTS OVERLAY -->
+<div class="list-overlay" id="sportsOverlay">
+<div class="home-btn"><button onclick="closeSports()">← HOME</button><span style="margin-left:10px;font-weight:800">Sports Groups</span></div>
+<div class="venue-page">
+<div style="text-align:center;padding:10px 0 6px;font-size:40px">🏆</div>
+<h2 style="font-size:18px">Sports Groups at Blackburn</h2>
+<p style="color:#aaa;font-size:13px;margin-top:6px">Tap a sport for details — contact Sally to join.</p>
+<div id="sportsContent" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+</div>
+</div>
+
+<!-- SOCIAL OVERLAY -->
+<div class="list-overlay" id="socialOverlay">
+<div class="home-btn"><button onclick="closeSocial()">← HOME</button><span style="margin-left:10px;font-weight:800">Social Groups</span></div>
+<div class="venue-page">
+<div style="text-align:center;padding:10px 0 6px;font-size:40px">🎉</div>
+<h2 style="font-size:18px">Social Groups & Clubs</h2>
+<p style="color:#aaa;font-size:13px;margin-top:6px">Tap a group — details coming soon, contact Sally for info.</p>
+<div id="socialContent" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
+</div>
+</div>
+
+<!-- TIMES OVERLAY -->
+<div class="list-overlay" id="timesOverlay">
+<div class="home-btn"><button onclick="closeTimes()">← HOME</button><span style="margin-left:10px;font-weight:800">Opening Times</span></div>
+<div class="venue-page">
+<h2 style="font-size:18px">Opening Hours</h2>
+<div style="margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Monday</span><span style="font-weight:800">3pm – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Tuesday</span><span style="font-weight:800">3pm – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Wednesday</span><span style="font-weight:800">3pm – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Thursday</span><span style="font-weight:800">3pm – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Friday</span><span style="font-weight:800">12pm – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Saturday</span><span style="font-weight:800">10am – Late</span></div>
+<div style="display:flex;justify-content:space-between;padding:14px"><span style="color:#aaa">Sunday</span><span style="font-weight:800">10am – Late</span></div>
+</div>
+<p style="font-size:11px;color:#666;margin-top:12px;text-align:center">Times may vary on event days — check Facebook</p>
+</div>
+</div>
+
+<!-- CONTACT OVERLAY -->
+<div class="list-overlay" id="contactOverlay">
+<div class="home-btn"><button onclick="closeContact()">← HOME</button><span style="margin-left:10px;font-weight:800">Contact Us</span></div>
+<div class="venue-page">
+<div style="text-align:center;padding:10px 0 6px;font-size:40px">📍</div>
+<h2 style="font-size:18px">Blackburn Leisure</h2>
+<p style="color:#aaa;font-size:13px;margin-top:4px">Prescott Ave, Brough HU15 1BB</p>
+<div style="margin-top:16px;display:grid;gap:10px">
+<div class="form-card" style="margin-top:0"><div style="font-size:11px;color:#aaa;font-weight:800">PHONE</div><div style="font-size:18px;font-weight:900;margin-top:6px;color:#fff">Sally — 07940 981301</div><div style="display:flex;gap:10px;margin-top:12px"><button onclick="callSally()" style="background:#B026FF;box-shadow:none;flex:1;color:#fff;font-weight:900">📞 Call 07940 981301</button></div></div>
+<div class="form-card"><div style="font-size:11px;color:#aaa;font-weight:800">FACEBOOK</div><div style="font-size:14px;font-weight:800;margin-top:6px;color:#fff">/BlackburnLeisure</div><div style="margin-top:10px"><a href="https://www.facebook.com/BlackburnLeisure" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">📘 Open Facebook →</a></div></div>
+<div class="form-card"><div style="font-size:11px;color:#aaa;font-weight:800">FIND US</div><div style="margin-top:10px"><a href="https://maps.google.com/?q=Blackburn+Leisure+Brough+HU15+1BB" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">📍 Open in Google Maps →</a></div></div>
+</div>
+</div>
+</div>
+
+<!-- VENUE OVERLAY -->
+<div class="list-overlay" id="venueOverlay">
+<div class="home-btn"><button onclick="closeVenue()">← HOME</button><span style="margin-left:10px;font-weight:800">Venue Hire</span></div>
+<div class="venue-page">
+<div class="venue-hero"><img src="venue-hero.jpg" alt="Venue"></div>
+<h2 style="font-size:18px">Hire Our Amazing Function Room</h2>
+<p style="color:#aaa;font-size:13px;margin-top:6px;line-height:1.6">Our main hall is an amazing space — beautifully set up for up to 200 guests with dance floor, big screen, stage, licensed bar and free parking. As you can see from the photos, it works perfectly for weddings, birthdays, parties, wakes, live music and community group gatherings. We can also provide catering — food and drinks packages to suit your event. Get in touch for availability and costs.</p>
+<div class="venue-bullets">
+<div class="bullet"><span>👥</span>Up to 200 guests</div>
+<div class="bullet"><span>🎬</span>Big Screen</div>
+<div class="bullet"><span>🎤</span>Stage</div>
+<div class="bullet"><span>🅿️</span>Free Parking</div>
+<div class="bullet"><span>🍔</span>Food & Drinks</div>
+<div class="bullet"><span>♿</span>Fully Accessible</div>
+</div>
+<div class="form-card">
+<label>YOUR NAME</label><input id="v_name" placeholder="Your name">
+<label>PHONE</label><input id="v_phone" placeholder="Your phone">
+<label>DATE WANTED</label><input id="v_date" type="date">
+<label>EVENT TYPE</label><select id="v_type"><option>Party</option><option>Wake</option><option>Music / Gig</option><option>Group Meeting</option><option>Other</option></select>
+<label>GUESTS (approx)</label><input id="v_guests" type="number" placeholder="e.g. 80">
+<label>MESSAGE</label><textarea id="v_msg" rows="3" placeholder="Tell us about your event..."></textarea>
+<button onclick="submitVenue()">Send Enquiry</button>
+<p style="font-size:10px;color:#666;margin-top:8px;text-align:center">Please call Sally on 07940 981301 to confirm</p>
+</div>
+</div>
+</div>
+
+<script>
+let events=[];
+fetch('./events.json').then(r=>r.json()).then(d=>{events=d;renderCarousel();}).catch(()=>{});
+
+const iconCalendar=`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
+const iconTrophy=`<svg viewBox="0 0 24 24"><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M4 8h2a2 2 0 0 0 0-4H4v4zM20 8h-2a2 2 0 0 1 0-4h2v4z"/><path d="M12 14v4"/><path d="M8 22h8"/></svg>`;
+const iconSocial=`<svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="7" r="2.5"/><path d="M2 20c0-3.3 2.7-6 6-6h2c3.3 0 6 2.7 6 6"/><path d="M13 16c0-2 1.5-3.5 3.5-3.5S20 14 20 16"/></svg>`;
+const iconBuilding=`<svg viewBox="0 0 24 24"><path d="M3 21V7l9-4 9 4v14"/><path d="M9 21V11h6v10"/><path d="M3 11h18"/></svg>`;
+const iconClock=`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`;
+const iconPhone=`<svg viewBox="0 0 24 24"><path d="M5 4a1 1 0 0 0-1 1v1c0 8 6 14 14 14h1a1 1 0 0 0 1-1v-2.5a1 1 0 0 0-.7-.9l-3-1a1 1 0 0 0-1 .2l-1.5 1.5a12 12 0 0 1-5-5L9.5 10a1 1 0 0 0 .2-1l-1-3A1 1 0 0 0 7.5 5H5z"/></svg>`;
+
+const buttons=[
+{label:"All Upcoming Events",icon:iconCalendar,active:true,action:"list"},
+{label:"Sports Groups",icon:iconTrophy,active:true,action:"sports"},
+{label:"Social Groups",icon:iconSocial,active:true,action:"social"},
+{label:"Venue Hire",icon:iconBuilding,active:true,action:"venue"},
+{label:"Opening Times",icon:iconClock,active:true,action:"times"},
+{label:"Contact Us",icon:iconPhone,active:true,action:"contact"}
+];
+
+const sportsData=[
+{name:"Football", icon:"⚽", desc:"We have a fantastic football set up and teams through all age groups."},
+{name:"Squash", icon:"", desc:"We have amazing squash courts and a welcoming squash club"},
+{name:"Snooker", icon:"🎱", desc:"We have four snooker tables and a snooker team. Pop along, grab a pint and have a frame."},
+{name:"Bowls", icon:"", desc:"Get in touch if you're interested in getting involved with a bowls team."},
+{name:"Tennis", icon:"🎾", desc:"We have a tennis court and tennis club. Get in touch for details."},
+{name:"Gym", icon:"💪", desc:"We have a superb gym on our premises. Get in touch for details."},
+{name:"Darts", icon:"🎯", desc:"We have three dart boards and darts teams. Come down and chuck some arrows!"}
+];
+
+const socialData=[
+{name:"Art Group", icon:"🎨", desc:"Details coming soon — contact Sally for info about our Art Group."},
+{name:"Carers Group", icon:"❤️", desc:"Details coming soon — contact Sally for info about our Carers Group."},
+{name:"Line Dancing", icon:"💃", desc:"Details coming soon — contact Sally for info about Line Dancing."},
+{name:"Pilates", icon:"🧘", desc:"Details coming soon — contact Sally for info about Pilates."}
+];
+
+const carousel=document.getElementById('carousel');
+const dots=document.getElementById('dots');
+
+const DEFAULT_APOLOGY="We're so sorry — this event has been cancelled.";
+
+function isCancelled(e){return String(e.title||'').toUpperCase().indexOf('CANCELLED')===0;}
+
+// Events stay listed until the end of their date, then hide automatically the next day
+function getUpcoming(){return events.filter(e=>new Date(e.date)>=new Date(new Date().setHours(0,0,0,0))).sort((a,b)=>new Date(a.date)-new Date(b.date));}
+// Carousel never shows cancelled events
+function getCarousel(){return getUpcoming().filter(e=>!isCancelled(e));}
+
+function ticketText(ev){
+ const t=String(ev.tickets||'').toLowerCase();
+ let main='';
+ if(t==='free')main='🎟️ Free entry';
+ else if(t==='door')main='🎟️ Tickets on the door';
+ else if(t==='advance')main='🎟️ Tickets in advance';
+ if(!main&&!ev.ticketNote)return '';
+ return main+(ev.ticketNote?`<small>${String(ev.ticketNote).replace(/</g,'&lt;')}</small>`:'');
+}
+
+function renderCarousel(){
+carousel.innerHTML='';dots.innerHTML='';
+const upcoming=getCarousel();
+if(upcoming.length===0){
+ carousel.innerHTML='<div style="padding:20px;color:#666;font-size:13px">No upcoming events — check back soon or follow Facebook /BlackburnLeisure</div>';
+ return;
+}
+upcoming.forEach((ev,i)=>{
+const card=document.createElement('div');card.className='poster-card';
+card.innerHTML=`<img src="${ev.poster}" loading="lazy"><button class="details-btn">Details</button><div class="poster-info"><div class="poster-title">${ev.title}</div><div style="font-size:11px;color:#ddd;margin-top:4px">📅 ${ev.date} • ${ev.time||''}</div></div>`;
+card.onclick=()=>openDetail(ev);carousel.appendChild(card);
+const dot=document.createElement('div');dot.className='dot'+(i===0?' active':'');dot.onclick=()=>{autoIndex=i;scrollToIndex(i);};dots.appendChild(dot);
+});
+autoIndex=0;
+}
+
+let autoIndex=0;
+let interval=null;
+
+function getCardWidth(){
+ const card=carousel.querySelector('.poster-card');
+ if(!card) return 300;
+ return card.offsetWidth + 16;
+}
+
+function scrollToIndex(idx){
+ const upcoming=getCarousel();
+ if(upcoming.length===0) return;
+ autoIndex=idx % upcoming.length;
+ const w=getCardWidth();
+ carousel.scrollTo({left:autoIndex*w,behavior:'smooth'});
+ document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===autoIndex));
+}
+
+function autoScroll(){
+ const upcoming=getCarousel();
+ if(upcoming.length<=1) return;
+ scrollToIndex((autoIndex+1) % upcoming.length);
+}
+
+function startAuto(){stopAuto();interval=setInterval(autoScroll,3500);}
+function stopAuto(){if(interval){clearInterval(interval);interval=null;}}
+
+carousel.addEventListener('touchstart',()=>stopAuto(),{passive:true});
+carousel.addEventListener('touchend',()=>startAuto(),{passive:true});
+carousel.addEventListener('mousedown',()=>stopAuto());
+carousel.addEventListener('mouseup',()=>startAuto());
+
+let scrollTimeout;
+carousel.addEventListener('scroll',()=>{
+ clearTimeout(scrollTimeout);
+ scrollTimeout=setTimeout(()=>{
+  const w=getCardWidth();
+  const idx=Math.round(carousel.scrollLeft/w);
+  autoIndex=idx;
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+ },100);
+});
+
+setTimeout(()=>startAuto(),1500);
+
+function renderGrid(){
+const grid=document.getElementById('grid');grid.innerHTML='';
+buttons.forEach(b=>{
+const div=document.createElement('div');div.className='box active';
+div.innerHTML=`<div class="icon-wrap">${b.icon}</div><div class="box-label">${b.label.toUpperCase()}</div>`;
+div.onclick=()=>{
+if(b.action==='list')openList();
+else if(b.action==='venue')openVenue();
+else if(b.action==='sports')openSports();
+else if(b.action==='social')openSocial();
+else if(b.action==='times')openTimes();
+else if(b.action==='contact')openContact();
+};
+grid.appendChild(div);
+});
+}
+
+function renderSports(){
+ const c=document.getElementById('sportsContent'); c.innerHTML='';
+ sportsData.forEach(g=>{
+  const div=document.createElement('div');
+  div.className='box active small-box';
+  div.style.cssText='background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);';
+  div.innerHTML=`<div style="font-size:32px;margin-bottom:8px">${g.icon}</div><div style="font-size:14px;font-weight:800;text-align:center">${g.name.toUpperCase()}</div>`;
+  div.onclick=()=>openGroupDetail(g);
+  c.appendChild(div);
+ });
+}
+function renderSocial(){
+ const c=document.getElementById('socialContent'); c.innerHTML='';
+ socialData.forEach(g=>{
+  const div=document.createElement('div');
+  div.className='box active small-box';
+  div.style.cssText='background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);';
+  div.innerHTML=`<div style="font-size:32px;margin-bottom:8px">${g.icon}</div><div style="font-size:14px;font-weight:800;text-align:center">${g.name.toUpperCase()}</div><div style="font-size:10px;color:#B026FF;margin-top:6px;font-weight:800">DETAILS SOON</div>`;
+  div.onclick=()=>openGroupDetail(g);
+  c.appendChild(div);
+ });
+}
+function openGroupDetail(g){
+ let overlay=document.getElementById('groupDetailOverlay');
+ if(!overlay){
+  overlay=document.createElement('div');
+  overlay.id='groupDetailOverlay';
+  overlay.className='list-overlay';
+  overlay.innerHTML=`<div class="home-btn"><button onclick="document.getElementById('groupDetailOverlay').classList.remove('open')">← BACK</button><span id="gdTitle" style="margin-left:10px;font-weight:800"></span></div><div class="venue-page"><div id="gdIcon" style="font-size:64px;text-align:center;margin:20px 0"></div><h2 id="gdName" style="font-size:22px;text-align:center"></h2><p id="gdDesc" style="color:#fff;font-size:15px;line-height:1.6;text-align:center;margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;padding:16px"></p><div class="form-card" style="margin-top:16px"><div style="text-align:center;color:#aaa;font-size:11px;margin-bottom:8px">Contact us for more details</div><button onclick="callSally()" style="background:#222;border:1px solid #333;margin-top:10px">📞 Call 07940 981301</button></div></div>`;
+  document.body.appendChild(overlay);
+ }
+ document.getElementById('gdTitle').textContent=g.name;
+ document.getElementById('gdIcon').textContent=g.icon;
+ document.getElementById('gdName').textContent=g.name;
+ document.getElementById('gdDesc').textContent=g.desc;
+ overlay.classList.add('open');
+}
+
+function openDetail(ev){
+window.currentEvent=ev;
+const cancelled=isCancelled(ev);
+document.getElementById('detailPoster').src=ev.poster;
+document.getElementById('detailTitle').textContent=ev.title;
+document.getElementById('detailDate').textContent='📅 '+ev.date;
+document.getElementById('detailTime').textContent='🕐 '+(ev.time||'');
+document.getElementById('detailDesc').textContent=ev.desc||'';
+const ap=document.getElementById('detailApology');
+if(cancelled){ap.textContent=ev.apology||DEFAULT_APOLOGY;ap.style.display='block';}else{ap.style.display='none';}
+const tk=document.getElementById('detailTickets');
+const tt=cancelled?'':ticketText(ev);
+if(tt){tk.innerHTML=tt;tk.style.display='block';}else{tk.style.display='none';}
+document.getElementById('shareWrap').style.display=cancelled?'none':'block';
+document.getElementById('detailOverlay').classList.add('open');
+}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open');}
+function shareEvent(){if(!window.currentEvent)return;const ev=window.currentEvent;const text=`${ev.title} - ${ev.date} ${ev.time} - ${ev.desc} - Blackburn Leisure`;if(navigator.share){navigator.share({title:ev.title,text:text});}else{prompt('Copy to share:',text);}}
+
+function openList(){
+const filtered=getUpcoming();
+const cont=document.getElementById('listContent');cont.innerHTML='';
+filtered.forEach(ev=>{
+const c=isCancelled(ev);
+const row=document.createElement('div');row.className='list-item'+(c?' cancelled':'');
+row.innerHTML=`<img src="${ev.poster}"><div style="flex:1"><div class="lt" style="font-weight:800;font-size:14px">${ev.title}</div><div style="font-size:11px;color:#aaa;margin-top:2px">📅 ${ev.date} • ${ev.time||''}</div>${c?'<span class="badge-cancel">CANCELLED</span>':''}</div><button style="background:#B026FF;color:#fff;border:none;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:800">Details</button>`;
+row.onclick=()=>{closeList();openDetail(ev);};cont.appendChild(row);
+});
+document.getElementById('listOverlay').classList.add('open');
+}
+function closeList(){document.getElementById('listOverlay').classList.remove('open');}
+
+function openSports(){ document.getElementById('sportsOverlay').classList.add('open'); renderSports(); }
+function closeSports(){ document.getElementById('sportsOverlay').classList.remove('open'); }
+function openSocial(){ document.getElementById('socialOverlay').classList.add('open'); renderSocial(); }
+function closeSocial(){ document.getElementById('socialOverlay').classList.remove('open'); }
+function openTimes(){ document.getElementById('timesOverlay').classList.add('open'); }
+function closeTimes(){ document.getElementById('timesOverlay').classList.remove('open'); }
+function openContact(){ document.getElementById('contactOverlay').classList.add('open'); }
+function closeContact(){ document.getElementById('contactOverlay').classList.remove('open'); }
+function openVenue(){document.getElementById('venueOverlay').classList.add('open');}
+function closeVenue(){document.getElementById('venueOverlay').classList.remove('open');}
+function getVenueData(){return{ name:document.getElementById('v_name').value, phone:document.getElementById('v_phone').value, date:document.getElementById('v_date').value, type:document.getElementById('v_type').value, guests:document.getElementById('v_guests').value, msg:document.getElementById('v_msg').value};}
+function submitVenue(){
+const d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
+alert('Thanks '+d.name+'! Please call Sally on 07940 981301 to confirm your enquiry for '+d.date+' - we have saved your details:\n\nName: '+d.name+'\nPhone: '+d.phone+'\nDate: '+d.date+'\nType: '+d.type+'\nGuests: '+d.guests+'\nMsg: '+d.msg);
+}
+function callSally(){window.location.href='tel:07940981301';}
+
+let deferredPrompt;
+const banner=document.getElementById('installBanner');
+const installBtn=document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;banner.classList.add('show');});
+installBtn.addEventListener('click',async()=>{
+if(deferredPrompt){deferredPrompt.prompt();const {outcome}=await deferredPrompt.userChoice;deferredPrompt=null;banner.classList.remove('show');}
+else{alert('To install: Tap Share → Add to Home Screen');}
+});
+setTimeout(()=>{
+if(window.navigator.standalone===false || !window.matchMedia('(display-mode: standalone)').matches){
+if(!deferredPrompt)banner.classList.add('show');
+}
+},2000);
+
+// 5-tap on logo to open manager
+let tapCount=0;let lastTap=0;
+const logoEl=document.getElementById('logoTap');
+if(logoEl){
+  logoEl.addEventListener('click',()=>{
+    const now=Date.now();
+    if(now-lastTap>2000)tapCount=0;
+    tapCount++;lastTap=now;
+    if(tapCount>=5){tapCount=0;window.location.href='./manager.html';}
+  });
+}
+renderCarousel();renderGrid();
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}
+</script>
+</body>
+</html>
