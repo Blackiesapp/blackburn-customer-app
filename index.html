@@ -424,7 +424,7 @@ function closeVenue(){document.getElementById('venueOverlay').classList.remove('
 function getVenueData(){return{ name:document.getElementById('v_name').value, phone:document.getElementById('v_phone').value, date:document.getElementById('v_date').value, type:document.getElementById('v_type').value, guests:document.getElementById('v_guests').value, msg:document.getElementById('v_msg').value};}
 function submitVenue(){
 const d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
-alert('Thanks '+d.name+'! '+((C.venue||{}).note||'Please call us to confirm your enquiry')+' (enquiry for '+d.date+').');
+fetch('https://script.google.com/macros/s/AKfycbxfq1hzEjEOlrlavQH-ta2AZjpSyZvfk5ZqiD7hsL9zjVzwmCQiVWaVnT9ubFBPAcNV-Q/exec',{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)}).then(()=>{alert('Thanks '+d.name+'! Your enquiry has been sent. '+((C.venue||{}).note||'We will be in touch soon.'));['v_name','v_phone','v_date','v_guests','v_msg'].forEach(i=>document.getElementById(i).value='');}).catch(()=>{alert('Sorry, that did not send. Please call us instead.');});
 }
 function callSally(){const p=getPhone();if(p)window.location.href='tel:'+p;}
 
