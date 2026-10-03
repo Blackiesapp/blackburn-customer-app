@@ -87,9 +87,7 @@ body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Se
 <div class="section-title">EXPLORE</div>
 <div class="grid" id="grid"></div>
 
-<div class="footer">
-Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br>Community Club — Not for Profit
-</div>
+<div class="footer" id="footer"></div>
 
 <div class="install-banner" id="installBanner"><span>📲 Install Blackburn App</span><button id="installBtn">Install</button></div>
 
@@ -109,13 +107,19 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <div id="listContent"></div>
 </div>
 
+<!-- NEWS OVERLAY -->
+<div class="list-overlay" id="newsOverlay">
+<div class="home-btn"><button onclick="closeNews()">← HOME</button><span style="margin-left:10px;font-weight:800">What's New</span></div>
+<div class="venue-page"><div id="newsContent"></div></div>
+</div>
+
 <!-- SPORTS OVERLAY -->
 <div class="list-overlay" id="sportsOverlay">
 <div class="home-btn"><button onclick="closeSports()">← HOME</button><span style="margin-left:10px;font-weight:800">Sports Groups</span></div>
 <div class="venue-page">
 <div style="text-align:center;padding:10px 0 6px;font-size:40px">🏆</div>
 <h2 style="font-size:18px">Sports Groups at Blackburn</h2>
-<p style="color:#aaa;font-size:13px;margin-top:6px">Tap a sport for details — contact Sally to join.</p>
+<p id="sportsIntro" style="color:#aaa;font-size:13px;margin-top:6px"></p>
 <div id="sportsContent" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
 </div>
 </div>
@@ -126,7 +130,7 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <div class="venue-page">
 <div style="text-align:center;padding:10px 0 6px;font-size:40px">🎉</div>
 <h2 style="font-size:18px">Social Groups & Clubs</h2>
-<p style="color:#aaa;font-size:13px;margin-top:6px">Tap a group — details coming soon, contact Sally for info.</p>
+<p id="socialIntro" style="color:#aaa;font-size:13px;margin-top:6px"></p>
 <div id="socialContent" style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:14px"></div>
 </div>
 </div>
@@ -136,16 +140,8 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <div class="home-btn"><button onclick="closeTimes()">← HOME</button><span style="margin-left:10px;font-weight:800">Opening Times</span></div>
 <div class="venue-page">
 <h2 style="font-size:18px">Opening Hours</h2>
-<div style="margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;overflow:hidden">
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Monday</span><span style="font-weight:800">3pm – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Tuesday</span><span style="font-weight:800">3pm – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Wednesday</span><span style="font-weight:800">3pm – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Thursday</span><span style="font-weight:800">3pm – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Friday</span><span style="font-weight:800">12pm – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid #222"><span style="color:#aaa">Saturday</span><span style="font-weight:800">10am – Late</span></div>
-<div style="display:flex;justify-content:space-between;padding:14px"><span style="color:#aaa">Sunday</span><span style="font-weight:800">10am – Late</span></div>
-</div>
-<p style="font-size:11px;color:#666;margin-top:12px;text-align:center">Times may vary on event days — check Facebook</p>
+<div id="timesRows" style="margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;overflow:hidden"></div>
+<p id="timesNote" style="font-size:11px;color:#666;margin-top:12px;text-align:center"></p>
 </div>
 </div>
 
@@ -154,13 +150,10 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <div class="home-btn"><button onclick="closeContact()">← HOME</button><span style="margin-left:10px;font-weight:800">Contact Us</span></div>
 <div class="venue-page">
 <div style="text-align:center;padding:10px 0 6px;font-size:40px">📍</div>
-<h2 style="font-size:18px">Blackburn Leisure</h2>
-<p style="color:#aaa;font-size:13px;margin-top:4px">Prescott Ave, Brough HU15 1BB</p>
-<div style="margin-top:16px;display:grid;gap:10px">
-<div class="form-card" style="margin-top:0"><div style="font-size:11px;color:#aaa;font-weight:800">PHONE</div><div style="font-size:18px;font-weight:900;margin-top:6px;color:#fff">Sally — 07940 981301</div><div style="display:flex;gap:10px;margin-top:12px"><button onclick="callSally()" style="background:#B026FF;box-shadow:none;flex:1;color:#fff;font-weight:900">📞 Call 07940 981301</button></div></div>
-<div class="form-card"><div style="font-size:11px;color:#aaa;font-weight:800">FACEBOOK</div><div style="font-size:14px;font-weight:800;margin-top:6px;color:#fff">/BlackburnLeisure</div><div style="margin-top:10px"><a href="https://www.facebook.com/BlackburnLeisure" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">📘 Open Facebook →</a></div></div>
-<div class="form-card"><div style="font-size:11px;color:#aaa;font-weight:800">FIND US</div><div style="margin-top:10px"><a href="https://maps.google.com/?q=Blackburn+Leisure+Brough+HU15+1BB" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">📍 Open in Google Maps →</a></div></div>
-</div>
+<h2 id="contactHead" style="font-size:18px"></h2>
+<p id="contactAddr" style="color:#aaa;font-size:13px;margin-top:4px"></p>
+<div id="contactLines" style="margin-top:16px;display:grid;gap:10px"></div>
+<div class="form-card"><div style="font-size:11px;color:#aaa;font-weight:800">FIND US</div><div style="margin-top:10px"><a id="mapLink" href="#" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">📍 Open in Google Maps →</a></div></div>
 </div>
 </div>
 
@@ -169,16 +162,9 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <div class="home-btn"><button onclick="closeVenue()">← HOME</button><span style="margin-left:10px;font-weight:800">Venue Hire</span></div>
 <div class="venue-page">
 <div class="venue-hero"><img src="venue-hero.jpg" alt="Venue"></div>
-<h2 style="font-size:18px">Hire Our Amazing Function Room</h2>
-<p style="color:#aaa;font-size:13px;margin-top:6px;line-height:1.6">Our main hall is an amazing space — beautifully set up for up to 200 guests with dance floor, big screen, stage, licensed bar and free parking. As you can see from the photos, it works perfectly for weddings, birthdays, parties, wakes, live music and community group gatherings. We can also provide catering — food and drinks packages to suit your event. Get in touch for availability and costs.</p>
-<div class="venue-bullets">
-<div class="bullet"><span>👥</span>Up to 200 guests</div>
-<div class="bullet"><span>🎬</span>Big Screen</div>
-<div class="bullet"><span>🎤</span>Stage</div>
-<div class="bullet"><span>🅿️</span>Free Parking</div>
-<div class="bullet"><span>🍔</span>Food & Drinks</div>
-<div class="bullet"><span>♿</span>Fully Accessible</div>
-</div>
+<h2 id="venueTitle" style="font-size:18px"></h2>
+<p id="venueText" style="color:#aaa;font-size:13px;margin-top:6px;line-height:1.6"></p>
+<div class="venue-bullets" id="venueBullets"></div>
 <div class="form-card">
 <label>YOUR NAME</label><input id="v_name" placeholder="Your name">
 <label>PHONE</label><input id="v_phone" placeholder="Your phone">
@@ -187,14 +173,14 @@ Prescott Ave, Brough HU15 1BB<br>07940 981301 • Facebook: /BlackburnLeisure<br
 <label>GUESTS (approx)</label><input id="v_guests" type="number" placeholder="e.g. 80">
 <label>MESSAGE</label><textarea id="v_msg" rows="3" placeholder="Tell us about your event..."></textarea>
 <button onclick="submitVenue()">Send Enquiry</button>
-<p style="font-size:10px;color:#666;margin-top:8px;text-align:center">Please call Sally on 07940 981301 to confirm</p>
+<p id="venueNote" style="font-size:10px;color:#666;margin-top:8px;text-align:center"></p>
 </div>
 </div>
 </div>
 
 <script>
 let events=[];
-fetch('./events.json').then(r=>r.json()).then(d=>{events=d;renderCarousel();}).catch(()=>{});
+fetch('./events.json?'+Date.now()).then(r=>r.json()).then(d=>{events=d;renderCarousel();}).catch(()=>{});
 
 const iconCalendar=`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
 const iconTrophy=`<svg viewBox="0 0 24 24"><path d="M6 4h12v6a6 6 0 0 1-12 0V4z"/><path d="M4 8h2a2 2 0 0 0 0-4H4v4zM20 8h-2a2 2 0 0 1 0-4h2v4z"/><path d="M12 14v4"/><path d="M8 22h8"/></svg>`;
@@ -203,6 +189,7 @@ const iconBuilding=`<svg viewBox="0 0 24 24"><path d="M3 21V7l9-4 9 4v14"/><path
 const iconClock=`<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`;
 const iconPhone=`<svg viewBox="0 0 24 24"><path d="M5 4a1 1 0 0 0-1 1v1c0 8 6 14 14 14h1a1 1 0 0 0 1-1v-2.5a1 1 0 0 0-.7-.9l-3-1a1 1 0 0 0-1 .2l-1.5 1.5a12 12 0 0 1-5-5L9.5 10a1 1 0 0 0 .2-1l-1-3A1 1 0 0 0 7.5 5H5z"/></svg>`;
 
+const iconNews=`<svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M8 9h6M8 13h6"/></svg>`;
 const buttons=[
 {label:"All Upcoming Events",icon:iconCalendar,active:true,action:"list"},
 {label:"Sports Groups",icon:iconTrophy,active:true,action:"sports"},
@@ -212,22 +199,55 @@ const buttons=[
 {label:"Contact Us",icon:iconPhone,active:true,action:"contact"}
 ];
 
-const sportsData=[
-{name:"Football", icon:"⚽", desc:"We have a fantastic football set up and teams through all age groups."},
-{name:"Squash", icon:"", desc:"We have amazing squash courts and a welcoming squash club"},
-{name:"Snooker", icon:"🎱", desc:"We have four snooker tables and a snooker team. Pop along, grab a pint and have a frame."},
-{name:"Bowls", icon:"", desc:"Get in touch if you're interested in getting involved with a bowls team."},
-{name:"Tennis", icon:"🎾", desc:"We have a tennis court and tennis club. Get in touch for details."},
-{name:"Gym", icon:"💪", desc:"We have a superb gym on our premises. Get in touch for details."},
-{name:"Darts", icon:"🎯", desc:"We have three dart boards and darts teams. Come down and chuck some arrows!"}
-];
-
-const socialData=[
-{name:"Art Group", icon:"🎨", desc:"Details coming soon — contact Sally for info about our Art Group."},
-{name:"Carers Group", icon:"❤️", desc:"Details coming soon — contact Sally for info about our Carers Group."},
-{name:"Line Dancing", icon:"💃", desc:"Details coming soon — contact Sally for info about Line Dancing."},
-{name:"Pilates", icon:"🧘", desc:"Details coming soon — contact Sally for info about Pilates."}
-];
+let C={};
+function esc(t){const d=document.createElement('div');d.textContent=t==null?'':String(t);return d.innerHTML;}
+function iconHTML(ic,px){
+ ic=String(ic||'');
+ if(/^data:image\//.test(ic)||/^https?:\/\//.test(ic))return `<img src="${ic}" style="width:${px}px;height:${px}px;object-fit:contain;border-radius:10px">`;
+ return esc(ic||'🏅');
+}
+function getPhone(){
+ const l=((C.contact||{}).lines||[]).find(x=>x.type==='phone');
+ return l?String(l.url||l.value).replace(/[^0-9+]/g,''):'';
+}
+function applyContent(){
+ const g=id=>document.getElementById(id);
+ g('footer').textContent=C.footer||'';
+ g('sportsIntro').textContent=(C.sports||{}).intro||'';
+ g('socialIntro').textContent=(C.social||{}).intro||'';
+ const t=C.times||{rows:[]};
+ g('timesRows').innerHTML=(t.rows||[]).map((r,i,a)=>`<div style="display:flex;justify-content:space-between;padding:14px;${i<a.length-1?'border-bottom:1px solid #222':''}"><span style="color:#aaa">${esc(r.day)}</span><span style="font-weight:800">${esc(r.hours)}</span></div>`).join('');
+ g('timesNote').textContent=t.note||'';
+ const c=C.contact||{lines:[]};
+ g('contactHead').textContent=c.heading||'';
+ g('contactAddr').textContent=c.address||'';
+ g('mapLink').href='https://maps.google.com/?q='+encodeURIComponent((c.heading||'')+' '+(c.address||''));
+ g('contactLines').innerHTML=(c.lines||[]).map((l,i)=>{
+  let btn='';
+  const u=String(l.url||'');
+  if(l.type==='phone')btn=`<div style="margin-top:12px"><a href="tel:${esc(u.replace(/[^0-9+]/g,''))}" style="display:block;text-align:center;background:#B026FF;color:#fff;text-decoration:none;font-weight:900;padding:12px;border-radius:12px">📞 Call ${esc(String(l.value).replace(/^.*?—\s*/,''))}</a></div>`;
+  else if(l.type==='email')btn=`<div style="margin-top:10px"><a href="mailto:${esc(u)}" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">✉️ Send email →</a></div>`;
+  else if(l.type==='link'&&/^https?:\/\//i.test(u))btn=`<div style="margin-top:10px"><a href="${esc(u)}" target="_blank" style="color:#fff;text-decoration:none;font-weight:800;border:1px solid #333;background:#111;padding:8px 12px;border-radius:10px;display:inline-block">Open →</a></div>`;
+  return `<div class="form-card" style="margin-top:0"><div style="font-size:11px;color:#aaa;font-weight:800">${esc(l.label)}</div><div style="font-size:${l.type==='phone'?18:14}px;font-weight:900;margin-top:6px;color:#fff">${esc(l.value)}</div>${btn}</div>`;
+ }).join('');
+ const v=C.venue||{};
+ g('venueTitle').textContent=v.title||'';
+ g('venueText').textContent=v.text||'';
+ g('venueBullets').innerHTML=(v.bullets||[]).map(b=>`<div class="bullet"><span>${iconHTML(b.icon,22)}</span>${esc(b.text)}</div>`).join('');
+ g('venueNote').textContent=v.note||'';
+ renderGrid();
+}
+function liveNews(){
+ const today=new Date(new Date().setHours(0,0,0,0));
+ return (C.news||[]).filter(n=>!n.until||new Date(n.until)>=today);
+}
+function openNews(){
+ const items=liveNews();
+ document.getElementById('newsContent').innerHTML=items.length?items.map(n=>`<div class="form-card" style="margin-top:0;margin-bottom:12px">${n.image?`<img src="${esc(n.image)}" style="width:100%;border-radius:12px;margin-bottom:10px">`:''}<div style="font-size:16px;font-weight:900">${esc(n.title)}</div>${n.date?`<div style="font-size:11px;color:#aaa;margin-top:2px">${esc(n.date)}</div>`:''}<div style="font-size:14px;color:#ddd;line-height:1.5;margin-top:8px;white-space:pre-line">${esc(n.text)}</div></div>`).join(''):'<p style="color:#666">Nothing new right now — check back soon.</p>';
+ document.getElementById('newsOverlay').classList.add('open');
+}
+function closeNews(){document.getElementById('newsOverlay').classList.remove('open');}
+fetch('./content.json?'+Date.now()).then(r=>r.json()).then(d=>{C=d;applyContent();}).catch(()=>{});
 
 const carousel=document.getElementById('carousel');
 const dots=document.getElementById('dots');
@@ -247,8 +267,10 @@ function ticketText(ev){
  if(t==='free')main='🎟️ Free entry';
  else if(t==='door')main='🎟️ Tickets on the door';
  else if(t==='advance')main='🎟️ Tickets in advance';
- if(!main&&!ev.ticketNote)return '';
- return main+(ev.ticketNote?`<small>${String(ev.ticketNote).replace(/</g,'&lt;')}</small>`:'');
+ const url=String(ev.ticketUrl||'').trim();
+ const okUrl=/^https?:\/\/[^\s"'<>]+$/i.test(url)?url:'';
+ if(!main&&!ev.ticketNote&&!okUrl)return '';
+ return main+(ev.ticketNote?`<small>${String(ev.ticketNote).replace(/</g,'&lt;')}</small>`:'')+(okUrl?`<a href="${okUrl}" target="_blank" rel="noopener" style="display:block;margin-top:10px;text-align:center;background:#B026FF;color:#fff;text-decoration:none;font-weight:900;padding:12px;border-radius:12px;box-shadow:0 0 14px rgba(176,38,255,0.6)">🎟️ Buy tickets →</a>`:'');
 }
 
 function renderCarousel(){
@@ -314,7 +336,9 @@ setTimeout(()=>startAuto(),1500);
 
 function renderGrid(){
 const grid=document.getElementById('grid');grid.innerHTML='';
-buttons.forEach(b=>{
+const all=buttons.slice();
+if(liveNews().length)all.push({label:"What's New",icon:iconNews,active:true,action:"news"});
+all.forEach(b=>{
 const div=document.createElement('div');div.className='box active';
 div.innerHTML=`<div class="icon-wrap">${b.icon}</div><div class="box-label">${b.label.toUpperCase()}</div>`;
 div.onclick=()=>{
@@ -324,44 +348,32 @@ else if(b.action==='sports')openSports();
 else if(b.action==='social')openSocial();
 else if(b.action==='times')openTimes();
 else if(b.action==='contact')openContact();
+else if(b.action==='news')openNews();
 };
 grid.appendChild(div);
 });
 }
 
-function renderSports(){
- const c=document.getElementById('sportsContent'); c.innerHTML='';
- sportsData.forEach(g=>{
-  const div=document.createElement('div');
-  div.className='box active small-box';
-  div.style.cssText='background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);';
-  div.innerHTML=`<div style="font-size:32px;margin-bottom:8px">${g.icon}</div><div style="font-size:14px;font-weight:800;text-align:center">${g.name.toUpperCase()}</div>`;
-  div.onclick=()=>openGroupDetail(g);
-  c.appendChild(div);
- });
+function groupCards(list,soonBadge){
+ return (list||[]).map((g,i)=>`<div class="box active small-box" data-i="${i}" style="background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);"><div style="font-size:32px;margin-bottom:8px">${iconHTML(g.icon,40)}</div><div style="font-size:14px;font-weight:800;text-align:center;padding:0 6px">${esc(String(g.name).toUpperCase())}</div>${soonBadge&&g.soon?'<div style="font-size:10px;color:#B026FF;margin-top:6px;font-weight:800">DETAILS SOON</div>':''}</div>`).join('');
 }
-function renderSocial(){
- const c=document.getElementById('socialContent'); c.innerHTML='';
- socialData.forEach(g=>{
-  const div=document.createElement('div');
-  div.className='box active small-box';
-  div.style.cssText='background:#0a0a0a;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;border:2px solid #B026FF;box-shadow:0 0 18px rgba(176,38,255,0.4);';
-  div.innerHTML=`<div style="font-size:32px;margin-bottom:8px">${g.icon}</div><div style="font-size:14px;font-weight:800;text-align:center">${g.name.toUpperCase()}</div><div style="font-size:10px;color:#B026FF;margin-top:6px;font-weight:800">DETAILS SOON</div>`;
-  div.onclick=()=>openGroupDetail(g);
-  c.appendChild(div);
- });
+function renderGroups(id,list,soonBadge){
+ const c=document.getElementById(id);c.innerHTML=groupCards(list,soonBadge);
+ c.querySelectorAll('.box').forEach(el=>{el.onclick=()=>openGroupDetail(list[+el.dataset.i]);});
 }
+function renderSports(){renderGroups('sportsContent',(C.sports||{}).items,false);}
+function renderSocial(){renderGroups('socialContent',(C.social||{}).items,true);}
 function openGroupDetail(g){
  let overlay=document.getElementById('groupDetailOverlay');
  if(!overlay){
   overlay=document.createElement('div');
   overlay.id='groupDetailOverlay';
   overlay.className='list-overlay';
-  overlay.innerHTML=`<div class="home-btn"><button onclick="document.getElementById('groupDetailOverlay').classList.remove('open')">← BACK</button><span id="gdTitle" style="margin-left:10px;font-weight:800"></span></div><div class="venue-page"><div id="gdIcon" style="font-size:64px;text-align:center;margin:20px 0"></div><h2 id="gdName" style="font-size:22px;text-align:center"></h2><p id="gdDesc" style="color:#fff;font-size:15px;line-height:1.6;text-align:center;margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;padding:16px"></p><div class="form-card" style="margin-top:16px"><div style="text-align:center;color:#aaa;font-size:11px;margin-bottom:8px">Contact us for more details</div><button onclick="callSally()" style="background:#222;border:1px solid #333;margin-top:10px">📞 Call 07940 981301</button></div></div>`;
+  overlay.innerHTML=`<div class="home-btn"><button onclick="document.getElementById('groupDetailOverlay').classList.remove('open')">← BACK</button><span id="gdTitle" style="margin-left:10px;font-weight:800"></span></div><div class="venue-page"><div id="gdIcon" style="font-size:64px;text-align:center;margin:20px 0"></div><h2 id="gdName" style="font-size:22px;text-align:center"></h2><p id="gdDesc" style="color:#fff;font-size:15px;line-height:1.6;text-align:center;margin-top:16px;background:#111;border:1px solid #222;border-radius:16px;padding:16px"></p><div class="form-card" style="margin-top:16px"><div style="text-align:center;color:#aaa;font-size:11px;margin-bottom:8px">Contact us for more details</div><button onclick="callSally()" style="background:#222;border:1px solid #333;margin-top:10px">📞 Call us</button></div></div>`;
   document.body.appendChild(overlay);
  }
  document.getElementById('gdTitle').textContent=g.name;
- document.getElementById('gdIcon').textContent=g.icon;
+ document.getElementById('gdIcon').innerHTML=iconHTML(g.icon,80);
  document.getElementById('gdName').textContent=g.name;
  document.getElementById('gdDesc').textContent=g.desc;
  overlay.classList.add('open');
@@ -412,9 +424,9 @@ function closeVenue(){document.getElementById('venueOverlay').classList.remove('
 function getVenueData(){return{ name:document.getElementById('v_name').value, phone:document.getElementById('v_phone').value, date:document.getElementById('v_date').value, type:document.getElementById('v_type').value, guests:document.getElementById('v_guests').value, msg:document.getElementById('v_msg').value};}
 function submitVenue(){
 const d=getVenueData(); if(!d.name||!d.phone||!d.date){alert('Please fill name, phone and date');return;}
-alert('Thanks '+d.name+'! Please call Sally on 07940 981301 to confirm your enquiry for '+d.date+' - we have saved your details:\n\nName: '+d.name+'\nPhone: '+d.phone+'\nDate: '+d.date+'\nType: '+d.type+'\nGuests: '+d.guests+'\nMsg: '+d.msg);
+alert('Thanks '+d.name+'! '+((C.venue||{}).note||'Please call us to confirm your enquiry')+' (enquiry for '+d.date+').');
 }
-function callSally(){window.location.href='tel:07940981301';}
+function callSally(){const p=getPhone();if(p)window.location.href='tel:'+p;}
 
 let deferredPrompt;
 const banner=document.getElementById('installBanner');

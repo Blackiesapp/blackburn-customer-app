@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "footer": "Prescott Ave, Brough HU15 1BB • 07940 981301 • Facebook: /BlackburnLeisure • Community Club — Not for Profit",
+  "sports": {
+    "intro": "Tap a sport for details — contact Sally to join.",
+    "items": [
+      {"name": "Football", "icon": "⚽", "desc": "We have a fantastic football set up and teams through all age groups."},
+      {"name": "Squash", "icon": "", "desc": "We have amazing squash courts and a welcoming squash club"},
+      {"name": "Snooker", "icon": "🎱", "desc": "We have four snooker tables and a snooker team. Pop along, grab a pint and have a frame."},
+      {"name": "Bowls", "icon": "", "desc": "Get in touch if you're interested in getting involved with a bowls team."},
+      {"name": "Tennis", "icon": "🎾", "desc": "We have a tennis court and tennis club. Get in touch for details."},
+      {"name": "Gym", "icon": "💪", "desc": "We have a superb gym on our premises. Get in touch for details."},
+      {"name": "Darts", "icon": "🎯", "desc": "We have three dart boards and darts teams. Come down and chuck some arrows!"}
+    ]
+  },
+  "social": {
+    "intro": "Tap a group for details — contact Sally for info.",
+    "items": [
+      {"name": "Art Group", "icon": "🎨", "desc": "Details coming soon — contact Sally for info about our Art Group.", "soon": true},
+      {"name": "Carers Group", "icon": "❤️", "desc": "Details coming soon — contact Sally for info about our Carers Group.", "soon": true},
+      {"name": "Line Dancing", "icon": "💃", "desc": "Details coming soon — contact Sally for info about Line Dancing.", "soon": true},
+      {"name": "Pilates", "icon": "🧘", "desc": "Details coming soon — contact Sally for info about Pilates.", "soon": true}
+    ]
+  },
+  "times": {
+    "rows": [
+      {"day": "Monday", "hours": "3pm – Late"},
+      {"day": "Tuesday", "hours": "3pm – Late"},
+      {"day": "Wednesday", "hours": "3pm – Late"},
+      {"day": "Thursday", "hours": "3pm – Late"},
+      {"day": "Friday", "hours": "12pm – Late"},
+      {"day": "Saturday", "hours": "10am – Late"},
+      {"day": "Sunday", "hours": "10am – Late"}
+    ],
+    "note": "Times may vary on event days — check Facebook"
+  },
+  "contact": {
+    "heading": "Blackburn Leisure",
+    "address": "Prescott Ave, Brough HU15 1BB",
+    "lines": [
+      {"label": "PHONE", "value": "Sally — 07940 981301", "type": "phone", "url": "07940981301"},
+      {"label": "FACEBOOK", "value": "/BlackburnLeisure", "type": "link", "url": "https://www.facebook.com/BlackburnLeisure"}
+    ]
+  },
+  "venue": {
+    "title": "Hire Our Amazing Function Room",
+    "text": "Our main hall is an amazing space — beautifully set up for up to 200 guests with dance floor, big screen, stage, licensed bar and free parking. As you can see from the photos, it works perfectly for weddings, birthdays, parties, wakes, live music and community group gatherings. We can also provide catering — food and drinks packages to suit your event. Get in touch for availability and costs.",
+    "bullets": [
+      {"icon": "👥", "text": "Up to 200 guests"},
+      {"icon": "🎬", "text": "Big Screen"},
+      {"icon": "🎤", "text": "Stage"},
+      {"icon": "🅿️", "text": "Free Parking"},
+      {"icon": "🍔", "text": "Food & Drinks"},
+      {"icon": "♿", "text": "Fully Accessible"}
+    ],
+    "note": "Please call Sally on 07940 981301 to confirm"
+  },
+  "news": []
+}
